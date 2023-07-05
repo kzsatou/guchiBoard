@@ -1,0 +1,10 @@
+<tbody>
+	<tr th:each="post : ${postlist}" th:object="${post}"
+		class="align-middle">
+		<td th:text="*{id}"></td>
+		<td th:text="*{title}"></td>
+		<td th:text="*{post}"></td>
+		<td th:text="${#dates.format(post.updateDate, 'yyyy/MM/dd')}"></td>
+		<td th:text="${#dates.format(post.createDate, 'yyyy/MM/dd')}"></td>
+	</tr>
+</tbody>

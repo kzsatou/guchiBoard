@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.example.guchiBoard.dao.PostMapper">
+
+    <!-- 全件検索 -->
+    <select id="findAll" resultType="com.example.guchiBoard.entity.Post">
+        SELECT * FROM post_test
+    </select>
+    <!-- 新規登録 -->
+    <insert id="add">  <!-- parameterType="Post" -->
+        INSERT INTO post_test
+            (id, title, post, updated_date, created_date)
+        VALUES
+            (#{id}, #{title}, #{post}, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP)
+    </insert>
+</mapper>
