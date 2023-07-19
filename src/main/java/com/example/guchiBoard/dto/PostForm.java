@@ -8,6 +8,7 @@ import lombok.Data;
 
 /**
  * 投稿登録 リクエストデータ
+ * 画面側で扱うデータの処理
  */
 @Data
 public class PostForm implements Serializable{ //PostForm

@@ -13,5 +13,25 @@
     <main th:replace="post/main.html"></main>
     <!-- <footer th:replace="common.html :: footer"></footer> -->
   </div>
+          <form th:action="@{/post/add}" th:object="${postForm}" th:method="post">
+          <!-- id処理はシーケンスにする -->
+<!--             <div class="form-group">
+                <label>id：<span class="text-danger">※</span></label>
+                <input type="text" th:field="*{id}" class="form-control">
+            </div> -->
+            <div class="form-group">
+                <label>タイトル：</label>
+                <input type="text" th:field="*{title}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>投稿：<!-- <span class="text-danger">※</span> --></label>
+                <input type="text" th:field="*{post}" class="form-control">
+            </div>
+            <br />
+            <div class="text-center">
+                <input type="submit" value="投稿" class="btn btn-primary">
+                <a href="/post/add" class="btn btn-secondary">キャンセル</a>
+            </div>
+        </form>
 </body>
 </html>
