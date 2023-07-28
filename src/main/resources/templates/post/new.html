@@ -1,37 +1,52 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <!--  <link rel="stylesheet" href="/css/normalize.css" th:href="@{/css/normalize.css}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--  <link rel="stylesheet" href="/css/normalize.css" th:href="@{/css/normalize.css}">
   <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}"> -->
-  <title>新規投稿</title>
+<title>新規投稿</title>
 </head>
 <body>
-  <div id="wrap">
-    <!-- <header th:replace="common.html :: header"></header> -->
-    <main th:replace="post/main.html"></main>
-    <!-- <footer th:replace="common.html :: footer"></footer> -->
-  </div>
-          <form th:action="@{/post/add}" th:object="${postForm}" th:method="post">
-          <!-- id処理はシーケンスにする -->
-<!--             <div class="form-group">
+	<div id="wrap">
+		<!-- <header th:replace="common.html :: header"></header> -->
+		<main th:replace="post/main.html"></main>
+		<!-- <footer th:replace="common.html :: footer"></footer> -->
+	</div>
+	<form th:action="@{/post/add}" th:object="${postForm}" th:method="post">
+		<!-- id処理はシーケンスにする -->
+		<!--             <div class="form-group">
                 <label>id：<span class="text-danger">※</span></label>
                 <input type="text" th:field="*{id}" class="form-control">
             </div> -->
-            <div class="form-group">
-                <label>タイトル：</label>
-                <input type="text" th:field="*{title}" class="form-control">
-            </div>
-            <div class="form-group">
-                <label>投稿：<!-- <span class="text-danger">※</span> --></label>
-                <input type="text" th:field="*{post}" class="form-control">
-            </div>
-            <br />
-            <div class="text-center">
-                <input type="submit" value="投稿" class="btn btn-primary">
-                <a href="/post/add" class="btn btn-secondary">キャンセル</a>
-            </div>
-        </form>
+		<select>
+			<option value="00"></option>
+			<option value="1">病気・症状</option>
+			<<!-- option value="02">健康診断</option>
+			<option value="03">薬剤</option>
+			<option value="04">怪我</option>
+			<option value="05">メンタルヘルス</option>  -->
+            <option
+                th:each="tags : ${tagsList}"
+                th:value="${tags.id}"
+                th:text="${tags.tag}"
+                th:selected="${tags.id == selectedValue}">
+            </option>
+		</select>
+
+		<div class="form-group">
+			<label>タイトル：</label> <input type="text" th:field="*{title}"
+				class="form-control">
+		</div>
+		<div class="form-group">
+			<label>投稿：<!-- <span class="text-danger">※</span> --></label> <input
+				type="text" th:field="*{post}" class="form-control">
+		</div>
+		<br />
+		<div class="text-center">
+			<input type="submit" value="投稿" class="btn btn-primary"> <a
+				href="/post/add" class="btn btn-secondary">キャンセル</a>
+		</div>
+	</form>
 </body>
 </html>

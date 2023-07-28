@@ -1,10 +1,58 @@
-<tbody>
-	<tr th:each="post : ${postlist}" th:object="${post}"
-		class="align-middle">
-		<td th:text="*{id}"></td>
-		<td th:text="*{title}"></td>
-		<td th:text="*{post}"></td>
-		<td th:text="${#dates.format(post.updateDate, 'yyyy/MM/dd')}"></td>
-		<td th:text="${#dates.format(post.createDate, 'yyyy/MM/dd')}"></td>
-	</tr>
-</tbody>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- layout:decorate="~{layouts/layout}" -->
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- <link rel="stylesheet" href="bootstrap.min.css" /> -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+<style>
+.row {
+	border: 1px solid red;
+}
+nav.navbar {
+  background-color: rgba(0,0,0,0.5);
+  border: 1px solid transparent;
+  border-color: white;
+  border-width: 0 0 1px;
+  margin-bottom: 20px;
+  padding: 0;
+  img {
+    height: 10px;
+  }
+}
+</style>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-success">
+		<ul class="navbar-nav ms-auto">
+			<li class="nav-item"><a class="nav-link" th:href="@{/post/new}"><img
+					src="/images/icons/post.png" th:src="@{/images/icons/post.png}"></a></li>
+			<li class="nav-item"><img src="/images/icons/karte.png"
+				th:src="@{/images/icons/karte.png}"></li>
+			<li class="nav-item"><img src="/images/icons/logout.png"
+				th:src="@{/images/icons/logout.png}"></li>
+		</ul>
+	</nav>
+	<div class="row" th:each="post : ${postlist}" th:object="${post}">
+		<!-- <table class="table"> -->
+		<!-- <tbody> -->
+		<!-- <tr th:each="post : ${postlist}" th:object="${post}"
+					class="align-middle"> -->
+		<main>
+			<td th:text="*{id}"></td>
+			<h2 th:text="*{title}"></h2>
+			<td th:text="*{post}"></td>
+			<!-- <td th:text="${#dates.format(post.updateDate, 'yyyy/MM/dd')}"></td>
+					<td th:text="${#dates.format(post.createDate, 'yyyy/MM/dd')}"></td> -->
+			<!-- </tr> -->
+		</main>
+		<!-- </tbody> -->
+		<!-- </table> -->
+	</div>
+</body>
+</html>

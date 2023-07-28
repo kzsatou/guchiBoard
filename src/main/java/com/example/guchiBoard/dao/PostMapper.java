@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.SelectKey;
 
 import com.example.guchiBoard.dto.PostForm;
 import com.example.guchiBoard.entity.Post;
+import com.example.guchiBoard.entity.Tags;
 
 /**
  * 投稿 Mapper
@@ -32,6 +33,14 @@ public interface PostMapper {
 	 * @return 検索結果
 	 */
 	List<Post> findAll();
+	
+	/**
+	 * 投稿タグ全件検索
+	 * 
+	 * @param Tags 検索用リクエストデータ
+	 * @return 検索結果
+	 */
+	List<Tags> findtagsAll();
 
 	/**
 	 * 投稿登録

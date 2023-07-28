@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.guchiBoard.dao.PostMapper;
 import com.example.guchiBoard.dto.PostForm;
 import com.example.guchiBoard.entity.Post;
+import com.example.guchiBoard.entity.Tags;
 
 /**
  * 投稿 Service
@@ -26,6 +27,14 @@ public class PostService {
      */
     public List<Post> findAll() {
         return postMapper.findAll();
+    }
+    
+    /**
+     * 投稿タグ全件検索
+     * @return 検索結果
+     */
+    public List<Tags> findtagsAll() {
+        return postMapper.findtagsAll();
     }
     
     /**

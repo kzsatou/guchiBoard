@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.guchiBoard.dto.PostForm;
 import com.example.guchiBoard.entity.Post;
+import com.example.guchiBoard.entity.Tags;
 import com.example.guchiBoard.service.PostService;
 
 /**
@@ -52,6 +53,10 @@ public class PostController {
 	 */
 	@GetMapping(value = "/post/new")
 	public String newTopic(Model model) {
+		//タグの表示
+		List<Tags> tagsList = postService.findtagsAll();
+		model.addAttribute("tagslist", tagsList);
+		//投稿フォーム
 		model.addAttribute("postForm", new PostForm());
 		return "post/new";
 	}
