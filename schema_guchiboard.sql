@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS post_tags;
 
 CREATE TABLE IF NOT EXISTS post_test (
     id SERIAL NOT NULL,
+    tag_code int NOT NULL,
     title varchar(50) NULL,
     post varchar(1000) NULL,
     created_date timestamp NULL,

@@ -32,10 +32,10 @@ public class PostController {
 	private PostService postService;
 
 	/**
-	 * ユーザー情報一覧画面を表示
+	 * メイン画面を表示
 	 * 
 	 * @param model Model
-	 * @return ユーザー情報一覧画面
+	 * @return メイン画面
 	 */
 	@GetMapping(value = "/main")
 	public String displayList(Model model) {

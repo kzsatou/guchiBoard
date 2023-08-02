@@ -7,46 +7,63 @@
   <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}"> -->
 <title>新規投稿</title>
 </head>
+<style>
+.form-control form-control-lg {
+	width: 150%;
+}
+</style>
 <body>
 	<div id="wrap">
 		<!-- <header th:replace="common.html :: header"></header> -->
-		<main th:replace="post/main.html"></main>
+		<main th:replace="layouts/common.html"></main>
 		<!-- <footer th:replace="common.html :: footer"></footer> -->
 	</div>
+	<div class="container">
+	<h1>新規投稿</h1>
 	<form th:action="@{/post/add}" th:object="${postForm}" th:method="post">
 		<!-- id処理はシーケンスにする -->
 		<!--             <div class="form-group">
                 <label>id：<span class="text-danger">※</span></label>
                 <input type="text" th:field="*{id}" class="form-control">
             </div> -->
-		<select>
-			<option value="00"></option>
-			<option value="1">病気・症状</option>
-			<<!-- option value="02">健康診断</option>
+        <div class="form-group">
+        <label>タグ：</label>
+			<select class="form-select" th:field="*{tagCode}">
+	            <option value="">---</option>
+				<option th:each="tags : ${tagslist}" th:value="${tags.id}"
+					th:text="${tags.tag}" th:selected="${tags.id == selectedValue}">
+				</option>
+	        </select>
+	    </div>
+<!-- 		<select id="post-tags" name="tag">
+			<option value="00"></option> -->
+			<!-- <option value="1">病気・症状</option> --> 
+			<!-- option value="02">健康診断</option>
 			<option value="03">薬剤</option>
 			<option value="04">怪我</option>
 			<option value="05">メンタルヘルス</option>  -->
-            <option
-                th:each="tags : ${tagsList}"
-                th:value="${tags.id}"
-                th:text="${tags.tag}"
-                th:selected="${tags.id == selectedValue}">
-            </option>
-		</select>
+<!-- 			<option th:each="tags : ${tagslist}" th:value="${tags.id}"
+				th:text="${tags.tag}" th:selected="${tags.id == selectedValue}">
+			</option>
+		</select> -->
 
 		<div class="form-group">
 			<label>タイトル：</label> <input type="text" th:field="*{title}"
 				class="form-control">
 		</div>
 		<div class="form-group">
-			<label>投稿：<!-- <span class="text-danger">※</span> --></label> <input
-				type="text" th:field="*{post}" class="form-control">
+			<label>投稿：<!-- <span class="text-danger">※</span> --></label> 
+			<label class="visually-hidden" for="inlineFormInputGroupUsername">コメント入力</label>
+			<input type="text" th:field="*{post}" class="form-control form-control-lg" id="inlineFormInputGroupUsername" placeholder="コメント入力">
 		</div>
 		<br />
 		<div class="text-center">
-			<input type="submit" value="投稿" class="btn btn-primary"> <a
-				href="/post/add" class="btn btn-secondary">キャンセル</a>
+			<!-- onclick="clickBtn1()"によってtag_codeを送信したい -->
+			<input type="submit" value="投稿" onclick="clickBtn1()"
+				class="btn btn-primary"> <a href="/main"
+				class="btn btn-secondary">キャンセル</a>
 		</div>
 	</form>
+	</div>
 </body>
 </html>

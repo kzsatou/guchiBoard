@@ -15,6 +15,16 @@ public class Post {
      */
     private Long id;
     
+	/**
+     * 投稿タグコード
+     */
+    private Long tagCode;
+    
+	/**
+     * 投稿タグ名
+     */
+    private String tag;
+    
     /**
      * タイトル
      */

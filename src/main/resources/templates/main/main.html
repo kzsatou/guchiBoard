@@ -14,28 +14,44 @@
 .row {
 	border: 1px solid red;
 }
+
+#img-post {
+	vertical-align: middle;
+	width: 128px;
+}
+#img-karte {
+	vertical-align: middle;
+	width: 128px;
+}
+#img-logout{
+	vertical-align: middle;
+	width: 128px;
+}
+
 nav.navbar {
-  background-color: rgba(0,0,0,0.5);
-  border: 1px solid transparent;
-  border-color: white;
-  border-width: 0 0 1px;
-  margin-bottom: 20px;
-  padding: 0;
-  img {
-    height: 10px;
-  }
+	background-color: rgba(0, 0, 0, 0.5);
+	border: 1px solid transparent;
+	border-color: white;
+	border-width: 0 0 1px;
+	margin-bottom: 20px;
+	padding: 0;
 }
 </style>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-success">
 		<ul class="navbar-nav ms-auto">
-			<li class="nav-item"><a class="nav-link" th:href="@{/post/new}"><img
-					src="/images/icons/post.png" th:src="@{/images/icons/post.png}"></a></li>
-			<li class="nav-item"><img src="/images/icons/karte.png"
-				th:src="@{/images/icons/karte.png}"></li>
-			<li class="nav-item"><img src="/images/icons/logout.png"
-				th:src="@{/images/icons/logout.png}"></li>
+			<li class="nav-item">
+				<a class="nav-link" th:href="@{/post/new}">
+					<img id="img-post" src="/images/icons/post.png" th:src="@{/images/icons/post.png}">
+				</a>
+			</li>
+			<li class="nav-item">
+				<img id="img-karte" src="/images/icons/karte.png" th:src="@{/images/icons/karte.png}">
+			</li>
+			<li class="nav-item">
+				<img id="img-logout" src="/images/icons/logout.png" th:src="@{/images/icons/logout.png}">
+			</li>
 		</ul>
 	</nav>
 	<div class="row" th:each="post : ${postlist}" th:object="${post}">
@@ -45,6 +61,7 @@ nav.navbar {
 					class="align-middle"> -->
 		<main>
 			<td th:text="*{id}"></td>
+			<td th:text="*{tag}"></td>
 			<h2 th:text="*{title}"></h2>
 			<td th:text="*{post}"></td>
 			<!-- <td th:text="${#dates.format(post.updateDate, 'yyyy/MM/dd')}"></td>

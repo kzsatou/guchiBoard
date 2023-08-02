@@ -18,6 +18,16 @@ public class PostForm implements Serializable{ //PostForm
     @NotEmpty(message = "id未登録")
     private Long id;
     
+	   /**
+  * 投稿タグコード
+  */
+    private Long tagCode;
+    
+	   /**
+  * 投稿タグ
+  */
+    private String tag;
+    
     /**
      * 投稿タイトル
      */

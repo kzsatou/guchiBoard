@@ -11,7 +11,13 @@
 	<!-- 全件検索 -->
 	<select id="findAll"
 		resultType="com.example.guchiBoard.entity.Post">
-		SELECT * FROM post_test
+		<!-- SELECT * FROM post_test -->
+		
+<!-- 		SELECT post_test.*, post_tags.tag FROM post_test
+LEFT JOIN post_tags ON (post_test.tag_code = post_tags.id)
+WHERE post_test.id = 1 
+		 -->
+		 SELECT * FROM post_test LEFT JOIN post_tags ON post_test.tag_code = post_tags.id
 	</select>
 	<!-- タグ全件検索 -->
 	<select id="findtagsAll"
@@ -24,9 +30,9 @@
 		INSERT INTO post_test
 		<!-- (id, title, post, updated_date, created_date) VALUES (#{id}, #{title}, 
 			#{post}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) -->
-		(title, post, updated_date, created_date)
+		(tag_code, title, post, updated_date, created_date)
 		VALUES
-		(#{title}, #{post},
+		(#{tagCode}, #{title}, #{post},
 		CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 	</insert>
 </mapper>

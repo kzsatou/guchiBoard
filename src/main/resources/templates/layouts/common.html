@@ -1,34 +1,58 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- layout:decorate="~{layouts/layout}" -->
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- <link rel="stylesheet" href="bootstrap.min.css" /> -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+<style>
+.row {
+	border: 1px solid red;
+}
+
+#img-post {
+	vertical-align: middle;
+	width: 128px;
+}
+#img-karte {
+	vertical-align: middle;
+	width: 128px;
+}
+#img-logout{
+	vertical-align: middle;
+	width: 128px;
+}
+
+nav.navbar {
+	background-color: rgba(0, 0, 0, 0.5);
+	border: 1px solid transparent;
+	border-color: white;
+	border-width: 0 0 1px;
+	margin-bottom: 20px;
+	padding: 0;
+}
+</style>
+</head>
 <body>
-   <nav class="navbar navbar-expand-lg fixed-top navbar-dark" layout:fragment="nav">
-      <div class="container">
-          <img src="/images/icons/logo.png" th:src="@{/images/icons/logo.png}" class="brand">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>  
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-                <img src="/images/icons/post.png" th:src="@{/images/icons/post.png}">
-            </li>
-            <li class="nav-item">
-                <img src="/images/icons/karte.png" th:src="@{/images/icons/karte.png}">
-            </li>
-            <li class="nav-item">
-                <img src="/images/icons/logout.png" th:src="@{/images/icons/logout.png}">
-            </li>
-<!--             <li class="nav-item">
-                <img src="/images/icons/register.png" th:src="@{/images/icons/register.png}">
-            </li>
-            <li class="nav-item">
-                <img src="/images/icons/login.png" th:src="@{/images/icons/login.png}">
-            </li> -->
-        </ul>
-      </div>
-      </div>
-    </nav>
+	<nav class="navbar navbar-expand-lg navbar-light bg-success">
+		<ul class="navbar-nav ms-auto">
+			<li class="nav-item">
+				<a class="nav-link" th:href="@{/post/new}">
+					<img id="img-post" src="/images/icons/post.png" th:src="@{/images/icons/post.png}">
+				</a>
+			</li>
+			<li class="nav-item">
+				<img id="img-karte" src="/images/icons/karte.png" th:src="@{/images/icons/karte.png}">
+			</li>
+			<li class="nav-item">
+				<img id="img-logout" src="/images/icons/logout.png" th:src="@{/images/icons/logout.png}">
+			</li>
+		</ul>
+	</nav>
     </body>
 </html>
