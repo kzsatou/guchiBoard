@@ -7,11 +7,12 @@
   <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}"> -->
 <title>新規投稿</title>
 </head>
-<style>
-.form-control form-control-lg {
-	width: 150%;
+<!-- <style>
+.form-control {
+	width: 100%;
+	box-sizing: border-box;
 }
-</style>
+</style> -->
 <body>
 	<div id="wrap">
 		<!-- <header th:replace="common.html :: header"></header> -->
@@ -54,14 +55,14 @@
 		<div class="form-group">
 			<label>投稿：<!-- <span class="text-danger">※</span> --></label> 
 			<label class="visually-hidden" for="inlineFormInputGroupUsername">コメント入力</label>
-			<input type="text" th:field="*{post}" class="form-control form-control-lg" id="inlineFormInputGroupUsername" placeholder="コメント入力">
+			<textarea th:field="*{post}" class="form-control form-control-lg" id="inlineFormInputGroupUsername" placeholder="コメント入力" rows="3"></textarea>
 		</div>
 		<br />
 		<div class="text-center">
-			<!-- onclick="clickBtn1()"によってtag_codeを送信したい -->
-			<input type="submit" value="投稿" onclick="clickBtn1()"
-				class="btn btn-primary"> <a href="/main"
+			<a href="/main"
 				class="btn btn-secondary">キャンセル</a>
+			<input type="submit" value="投稿" 
+				class="btn btn-primary"> 
 		</div>
 	</form>
 	</div>

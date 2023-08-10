@@ -12,7 +12,7 @@
 	crossorigin="anonymous">
 <style>
 .row {
-	border: 1px solid red;
+	border: 1px solid green;
 }
 
 #img-post {
@@ -26,6 +26,10 @@
 #img-logout{
 	vertical-align: middle;
 	width: 128px;
+}
+#img-reply {
+	vertical-align: middle;
+	width: 32px;
 }
 
 nav.navbar {
@@ -54,22 +58,42 @@ nav.navbar {
 			</li>
 		</ul>
 	</nav>
-	<div class="row" th:each="post : ${postlist}" th:object="${post}">
+	<div class="container">
+	<div class="row">
+	<div class="col-4 ">
+	</div>
+	<!-- <div class="row" th:each="post : ${postlist}" th:object="${post}"> -->
+	<!-- <div class="col-lg-8 mt-4"> -->
+	<div class="col-8">
+	<div class="card" th:each="post : ${postlist}" th:object="${post}">
+	<div class="card-body">
 		<!-- <table class="table"> -->
 		<!-- <tbody> -->
 		<!-- <tr th:each="post : ${postlist}" th:object="${post}"
 					class="align-middle"> -->
-		<main>
+		<!-- <main> -->
 			<td th:text="*{id}"></td>
-			<td th:text="*{tag}"></td>
-			<h2 th:text="*{title}"></h2>
-			<td th:text="*{post}"></td>
+			<!-- <td th:text="*{tag}"></td> -->
+			<button type="button" class="btn btn-info" th:text="*{tag}" disabled></button>
+			<h5 class="card-title" th:text="*{title}"></h5>
+			<p class="card-text" th:text="*{post}"></p>
+			<a href="/post/reply/new" th:href="@{'/post/{id}/reply/new'(id=${post.id})}" class="icon">
+			<img id="img-reply" src="/images/icons/reply.png" th:src="@{/images/icons/reply.png}" class="card-img-bottom">
+			</a>
+			<!-- 返信表示 -->
+			<div class="card" th:each="post : ${postlist}" th:object="${post}">
+			<p class="card-text" th:text="*{replyComments}"></p>
+			</div> 
 			<!-- <td th:text="${#dates.format(post.updateDate, 'yyyy/MM/dd')}"></td>
 					<td th:text="${#dates.format(post.createDate, 'yyyy/MM/dd')}"></td> -->
 			<!-- </tr> -->
-		</main>
+		<!-- </main> -->
 		<!-- </tbody> -->
 		<!-- </table> -->
+		</div>
+	</div>
+	</div>
+	</div>
 	</div>
 </body>
 </html>

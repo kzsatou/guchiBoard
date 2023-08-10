@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.guchiBoard.dto.PostForm;
 import com.example.guchiBoard.entity.Post;
+import com.example.guchiBoard.entity.Reply;
 import com.example.guchiBoard.entity.Tags;
 import com.example.guchiBoard.service.PostService;
 
@@ -40,6 +41,7 @@ public class PostController {
 	@GetMapping(value = "/main")
 	public String displayList(Model model) {
 		List<Post> postList = postService.findAll();
+		//List<Post> replyList = Post.replyList;
 		model.addAttribute("postlist", postList);
 		model.addAttribute("postForm", new PostForm());
 		return "main/main";

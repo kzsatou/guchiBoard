@@ -1,6 +1,7 @@
 package com.example.guchiBoard.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -39,8 +40,15 @@ public class Post {
      * 更新日時
      */
     private Date updateDate;
+    
     /**
      * 登録日時
      */
     private Date createDate;
+    
+    /**
+     * 返信リスト
+     */
+    List<Reply> replyList;
+    
 }
