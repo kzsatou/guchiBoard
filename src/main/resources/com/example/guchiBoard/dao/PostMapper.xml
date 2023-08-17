@@ -16,7 +16,7 @@
 		<result property="post" column="post" />
 		<result property="createDate" column="created_date" />
 		<result property="updateDate" column="updated_date" />
-	<collection property="reply" javaType="ArrayList" ofType="com.example.guchiBoard.entity.Reply">
+	<collection property="replyList" javaType="ArrayList" ofType="com.example.guchiBoard.entity.Reply">
 		<id property="id" column="id" />
 		<result property="postId" column="post_id" />
 		<result property="replyComments" column="comments" />
@@ -25,7 +25,7 @@
 	</collection>
 	</resultMap>
 	<select id="findAll"
-		resultType="com.example.guchiBoard.entity.Post">
+		resultType="com.example.guchiBoard.entity.Post" resultMap="postMap">
 		
 		 <!-- SELECT * FROM post_test LEFT JOIN post_tags ON post_test.tag_code = post_tags.id -->
 		 
