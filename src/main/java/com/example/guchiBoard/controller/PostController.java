@@ -3,6 +3,8 @@ package com.example.guchiBoard.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +16,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.example.guchiBoard.dto.PostDetailForm;
 import com.example.guchiBoard.dto.PostForm;
 import com.example.guchiBoard.entity.Post;
 import com.example.guchiBoard.entity.Reply;
 import com.example.guchiBoard.entity.Tags;
 import com.example.guchiBoard.service.PostService;
+import com.example.guchiBoard.config.AppConfig;
 
 /**
  * 投稿 Controller
@@ -32,6 +36,10 @@ public class PostController {
 	@Autowired
 	private PostService postService;
 
+	
+	@Autowired 
+	private ModelMapper modelMapper;
+	 
 	/**
 	 * メイン画面を表示
 	 * 
@@ -39,10 +47,17 @@ public class PostController {
 	 * @return メイン画面
 	 */
 	@GetMapping(value = "/main")
-	public String displayList(Model model) {
-		List<Post> postList = postService.findAll();
-		//List<Post> replyList = Post.replyList;
-		model.addAttribute("postlist", postList);
+	public String displayList(Model model, PostDetailForm form) {
+		//List<Post> postList = postService.findAll();
+		Post post = postService.findAll();
+		//form = modelMapper.map(post, PostDetailForm.class);
+		//List<Reply> replyList = postService.findReply();
+		//Post postList = postService.findAll();
+		//form = modelMapper.map(postList, Post.class);
+		form.setReplyList(post.getReplyList());
+		model.addAttribute("postlist", post);
+		model.addAttribute("replylist", form);
+		//model.addAttribute("replylist", replyList);
 		model.addAttribute("postForm", new PostForm());
 		return "main/main";
 	}

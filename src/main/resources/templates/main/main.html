@@ -80,10 +80,18 @@ nav.navbar {
 			<a href="/post/reply/new" th:href="@{'/post/{id}/reply/new'(id=${post.id})}" class="icon">
 			<img id="img-reply" src="/images/icons/reply.png" th:src="@{/images/icons/reply.png}" class="card-img-bottom">
 			</a>
-			<!-- 返信コメント表示 -->
-			<div class="card" th:each="post : ${postlist}" th:object="${post}">
-			<p class="card-text" th:text="*{replyList}"></p>
+			<!-- 髴第ｯ費ｽｿ�ｽ｡郢ｧ�ｽｳ郢晢ｽ｡郢晢ｽｳ郢晞メ�ｽ｡�ｽｨ驕会ｽｺ -->
+			<!-- <div class="card" th:each="post : ${postlist}" th:object="${post}">
+			<p class="card-text" th:text="*{replyList}"></p> -->
 			<!-- <p class="card-text" th:each="item: ${replyList.replyComments}"> -->
+			<!-- <div class="card" th:each="post : ${postlist}" th:object="${post}"> -->
+				<!-- <p class="card-text" th:text="*{replyList}"></p> -->
+				<!-- <div class="card" th:each="reply, stat : ${post.replyList}" th:object="${reply}"> -->
+				<div class="card" th:each="reply, stat : ${replyList}" th:object="${reply}">
+					<p class="card-text" th:text="*{replyComments}"></p>
+				    <td th:text="${stat.size}"></td>
+				</div> 
+			<!-- </div> -->
 			</div> 
 			<!-- <td th:text="${#dates.format(post.updateDate, 'yyyy/MM/dd')}"></td>
 					<td th:text="${#dates.format(post.createDate, 'yyyy/MM/dd')}"></td> -->
@@ -92,7 +100,6 @@ nav.navbar {
 		<!-- </tbody> -->
 		<!-- </table> -->
 		</div>
-	</div>
 	</div>
 	</div>
 	</div>

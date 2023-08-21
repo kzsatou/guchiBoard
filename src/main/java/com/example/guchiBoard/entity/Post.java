@@ -4,11 +4,13 @@ import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * 投稿 Entity
  */
 @Data
+/* @ToString(exclude = {"replyList"}) */
 public class Post {
 
 	/**
@@ -49,6 +51,6 @@ public class Post {
     /**
      * 返信リスト
      */
-    List<Reply> replyList;
+    private List<Reply> replyList;
     
 }

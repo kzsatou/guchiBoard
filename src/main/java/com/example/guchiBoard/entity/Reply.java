@@ -32,5 +32,7 @@ public class Reply {
      * 登録日時
      */
     private Date createDate;
+    
+    private Post post;
 
 }
