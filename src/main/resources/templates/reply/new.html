@@ -11,9 +11,16 @@
 	</div>
 	<div class="container">
 	<h1>返信</h1>
+			<!-- エラーメッセージ -->
+	<table>
+        <tr th:if="${validationError}" th:each="error : ${validationError}">
+            <td style="color: red;" th:text="${error}"></td>
+        </tr>
+    </table>
  	 <form th:action="@{/reply/__${replyForm.postId}__/add}" th:object="${replyForm}" th:method="reply"> 
 			<div class="form-group">
 			<label>返信：</label> 
+			<!-- <span th:if="${#fields.hasErrors('replyComments')}" th:errors="*{replyComments}" style="color: red"></span> -->
 			<label class="visually-hidden" for="inlineFormInputGroupUsername">コメント入力</label>
 			<textarea th:field="*{replyComments}" class="form-control form-control-lg" id="inlineFormInputGroupUsername" placeholder="コメント入力" rows="3"></textarea>
 		</div> 

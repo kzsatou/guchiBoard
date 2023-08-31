@@ -15,7 +15,7 @@ public class PostForm implements Serializable{ //PostForm
 	   /**
      * 名前
      */
-    @NotEmpty(message = "id未登録")
+    //@NotEmpty(message = "id未登録")
     private Long id;
     
 	   /**
@@ -26,6 +26,7 @@ public class PostForm implements Serializable{ //PostForm
 	   /**
   * 投稿タグ
   */
+    @NotEmpty(message = "タグを選択してください")
     private String tag;
     
     /**

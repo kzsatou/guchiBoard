@@ -48,15 +48,21 @@ public class PostController {
 	 */
 	@GetMapping(value = "/main")
 	public String displayList(Model model, PostDetailForm form) {
-		//List<Post> postList = postService.findAll();
-		Post post = postService.findAll();
+		List<Post> postList = postService.findAll();
+		//Post post = postService.findAll();
 		//form = modelMapper.map(post, PostDetailForm.class);
 		//List<Reply> replyList = postService.findReply();
 		//Post postList = postService.findAll();
 		//form = modelMapper.map(postList, Post.class);
-		form.setReplyList(post.getReplyList());
-		model.addAttribute("postlist", post);
-		model.addAttribute("replylist", form);
+		//form.setReplyList(post.getReplyList());
+		model.addAttribute("postlist", postList);
+		
+		  System.out.println("postlistのサイズ"+postList.size()); 
+		  for (Post post:postList){ 
+			  System.out.println(post.getReplyList().size()); 
+			  }
+		 
+		//model.addAttribute("replylist", form);
 		//model.addAttribute("replylist", replyList);
 		model.addAttribute("postForm", new PostForm());
 		return "main/main";
@@ -86,19 +92,22 @@ public class PostController {
 	 * @return 投稿一覧画面
 	 */
 	/* @RequestMapping(value = "/user/create", method = RequestMethod.POST) */
-	@RequestMapping(value = "/post/add") /* , method = RequestMethod.POST */
-	public String create(@ModelAttribute PostForm postForm, BindingResult result, Model model) { // validationは入力のチェック
-		/*
-		 * public String create(@Validated @ModelAttribute PostForm postForm, BindingResult result,
-		 * Model model) {
-		 */
+	@RequestMapping(value = "/post/add" , method = RequestMethod.POST) /* , method = RequestMethod.POST */
+	//public String create(@ModelAttribute PostForm postForm, BindingResult result, Model model) { // validationは入力のチェック
+		
+	  public String create(@Validated @ModelAttribute PostForm postForm, BindingResult result,
+		  Model model) {
+		 
 
-		/*
-		 * if (result.hasErrors()) { // 入力チェックエラーの場合 List<String> errorList = new
-		 * ArrayList<String>(); for (ObjectError error : result.getAllErrors()) {
-		 * errorList.add(error.getDefaultMessage()); }
-		 * model.addAttribute("validationError", errorList); return "post/new"; }
-		 */
+		
+		  if (result.hasErrors()) { // 入力チェックエラーの場合 List<String> errorList = new
+		  ArrayList<String> errorList = new ArrayList<String>(); 
+		  for (ObjectError error : result.getAllErrors()) {
+		  errorList.add(error.getDefaultMessage()); }
+		  model.addAttribute("validationError", errorList); 
+		  return "post/new"; 
+		  }
+		 
 
 		// ユーザー情報の登録
 		/* test用

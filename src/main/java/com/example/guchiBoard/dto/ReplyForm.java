@@ -14,7 +14,7 @@ public class ReplyForm implements Serializable {
 	/**
 	 * 名前
 	 */
-	@NotEmpty(message = "id未登録")
+	//@NotEmpty(message = "id未登録")
 	private Long id;
 
 	/**

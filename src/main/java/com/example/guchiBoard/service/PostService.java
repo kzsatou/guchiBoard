@@ -26,8 +26,8 @@ public class PostService {
      * 投稿全件検索
      * @return 検索結果
      */
-    //public List<Post> findAll() {
-    public Post findAll() {
+    public List<Post> findAll() {
+    //public Post findAll() {
         return postMapper.findAll();
     }
     

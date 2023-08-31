@@ -33,8 +33,8 @@ public interface PostMapper {
 	 * @param Post 検索用リクエストデータ
 	 * @return 検索結果
 	 */
-	//List<Post> findAll();
-	public Post findAll();
+	List<Post> findAll();
+	//public Post findAll();
 	
 	/**
 	 * 返信検索

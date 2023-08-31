@@ -20,6 +20,12 @@
 		<!-- <footer th:replace="common.html :: footer"></footer> -->
 	</div>
 	<div class="container">
+		<!-- エラーメッセージ -->
+	    <table>
+        <tr th:if="${validationError}" th:each="error : ${validationError}">
+            <td style="color: red;" th:text="${error}"></td>
+        </tr>
+    </table>
 	<h1>新規投稿</h1>
 	<form th:action="@{/post/add}" th:object="${postForm}" th:method="post">
 		<!-- id処理はシーケンスにする -->
@@ -30,7 +36,7 @@
         <div class="form-group">
         <label>タグ：</label>
 			<select class="form-select" th:field="*{tagCode}">
-	            <option value="">---</option>
+	            <option value=""></option>
 				<option th:each="tags : ${tagslist}" th:value="${tags.id}"
 					th:text="${tags.tag}" th:selected="${tags.id == selectedValue}">
 				</option>
