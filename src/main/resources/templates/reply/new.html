@@ -17,7 +17,7 @@
             <td style="color: red;" th:text="${error}"></td>
         </tr>
     </table>
- 	 <form th:action="@{/reply/__${replyForm.postId}__/add}" th:object="${replyForm}" th:method="reply"> 
+ 	 <form th:action="@{/reply/__${replyForm.postId}__/add}" th:object="${replyForm}" th:method="post"> 
 			<div class="form-group">
 			<label>返信：</label> 
 			<!-- <span th:if="${#fields.hasErrors('replyComments')}" th:errors="*{replyComments}" style="color: red"></span> -->

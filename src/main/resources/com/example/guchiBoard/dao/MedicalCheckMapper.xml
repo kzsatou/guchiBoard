@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.guchiBoard.dao.MedicalCheckMapper">
+
+<!-- 新規健康診断結果登録 -->
+	<insert id="addMedical" 
+		parameterType="com.example.guchiBoard.dto.MedicalCheckForm">  
+		INSERT INTO medical_check
+		(user_id, year, pdf_path, picture_path, url_path, updated_date, created_date)
+		VALUES
+		(#{userId}, #{checkYear}, #{pdfPath}, #{picturePath}, #{urlPath},
+		CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+	</insert>
+
+</mapper>

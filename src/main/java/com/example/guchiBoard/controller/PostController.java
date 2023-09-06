@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.example.guchiBoard.dto.PostDetailForm;
 import com.example.guchiBoard.dto.PostForm;
 import com.example.guchiBoard.entity.Post;
 import com.example.guchiBoard.entity.Reply;
@@ -47,7 +46,7 @@ public class PostController {
 	 * @return メイン画面
 	 */
 	@GetMapping(value = "/main")
-	public String displayList(Model model, PostDetailForm form) {
+	public String displayList(Model model, Post form) {
 		List<Post> postList = postService.findAll();
 		//Post post = postService.findAll();
 		//form = modelMapper.map(post, PostDetailForm.class);
@@ -62,8 +61,6 @@ public class PostController {
 			  System.out.println(post.getReplyList().size()); 
 			  }
 		 
-		//model.addAttribute("replylist", form);
-		//model.addAttribute("replylist", replyList);
 		model.addAttribute("postForm", new PostForm());
 		return "main/main";
 	}
