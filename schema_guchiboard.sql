@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS reply_comments (
 );
 
 CREATE TABLE IF NOT EXISTS medical_check (
+	id SERIAL NOT NULL,
     user_id int NOT NULL,
     year int NOT NULL,
     pdf_path varchar(255) NOT NULL default 'default',

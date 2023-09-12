@@ -3,6 +3,8 @@ package com.example.guchiBoard.entity;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 /**
@@ -20,6 +22,13 @@ public class MedicalCheck {
      * 健康診断年度
      */
     private int checkYear;
+    
+	/**
+     * File本体
+     */
+    private MultipartFile mFile_pdf;
+    
+    private MultipartFile mFile_picture;
     
 	/**
      * PDFの場所

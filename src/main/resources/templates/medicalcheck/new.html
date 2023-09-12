@@ -9,17 +9,42 @@
 	<div id="wrap">
 		<main th:replace="layouts/common.html"></main>
 	</div>
-	
+
 	<div class="container">
-	<h1>健康診断登録</h1>
-	
-	<select>
+		<h1>健康診断登録</h1>
+
+		<select>
 			<option value="0">-------</option>
-			<option value="1">PDFで登録</option> 
+			<option value="1">PDFで登録</option>
 			<option value="2">写真で登録</option>
 			<option value="3">URLで登録</option>
 			<option value="4">手入力で登録</option>
-	</select>
-	
-	
+		</select>
+
+		<form th:action="@{/medicalcheck/add}" th:object="${medicalForm}"
+			th:method="post" enctype="multipart/form-data">
+
+			<div class="form-group">
+				<label>年度：</label> <input type="text" th:field="*{checkYear}"
+					class="form-control">
+			</div>
+
+<!-- 			<div class="form-group">
+				<label>PDF：</label> <input type="file" th:field="*{mFile}"
+					class="form-control">
+			</div> -->
+
+			<div class="form-group">
+				<label>写真：</label> <input type="file" th:field="*{mFile}"
+					class="form-control">
+			</div>
+			
+			<br />
+			<div class="text-center">
+			<a href="/main"
+				class="btn btn-secondary">キャンセル</a>
+			<input type="submit" value="投稿" 
+				class="btn btn-primary"> 
+		</div>
+		</form>
 	</div>
