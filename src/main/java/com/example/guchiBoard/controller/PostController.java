@@ -13,10 +13,12 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.guchiBoard.dto.PostForm;
+import com.example.guchiBoard.dto.ReplyForm;
 import com.example.guchiBoard.entity.Post;
 import com.example.guchiBoard.entity.Reply;
 import com.example.guchiBoard.entity.Tags;
@@ -48,12 +50,6 @@ public class PostController {
 	@GetMapping(value = "/main")
 	public String displayList(Model model, Post form) {
 		List<Post> postList = postService.findAll();
-		//Post post = postService.findAll();
-		//form = modelMapper.map(post, PostDetailForm.class);
-		//List<Reply> replyList = postService.findReply();
-		//Post postList = postService.findAll();
-		//form = modelMapper.map(postList, Post.class);
-		//form.setReplyList(post.getReplyList());
 		model.addAttribute("postlist", postList);
 		
 		  System.out.println("postlistのサイズ"+postList.size()); 
@@ -79,6 +75,23 @@ public class PostController {
 		//投稿フォーム
 		model.addAttribute("postForm", new PostForm());
 		return "post/new";
+	}
+	
+	/**
+	 * 投稿の詳細画面に遷移
+	 * 
+	 * @param model       Model
+	 * @return 投稿詳細画面
+	 */
+	@RequestMapping(value = "/post/{postId}/detail")
+	public String newComment(@PathVariable("postId") long postId, Model model, Post form) {
+
+		List<Post> postOne = postService.findOne(postId);
+		/*ファイルを表示する処理(仮)*/
+		
+		model.addAttribute("postOne", postOne);
+
+		return "post/detail";
 	}
 
 	/**

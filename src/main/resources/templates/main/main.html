@@ -69,17 +69,13 @@ nav.navbar {
 	<!-- <div class="col-lg-8 mt-4"> -->
 	<div class="col-8">
 	<div class="card" th:each="post : ${postlist}" th:object="${post}">
+	<a href="/post/detail" th:href="@{'/post/{id}/detail'(id=${post.id})}" data-bs-toggle="tooltip" data-bs-placement="right" title="クリックして投稿の詳細を見る">
 	<div class="card-body">
-		<!-- <table class="table"> -->
-		<!-- <tbody> -->
-		<!-- <tr th:each="post : ${postlist}" th:object="${post}"
-					class="align-middle"> -->
-		<!-- <main> -->
 			<td th:text="*{id}"></td>
 			<!-- <td th:text="*{tag}"></td> -->
 			<button type="button" class="btn btn-info" th:text="*{tag}" disabled></button>
 			<h5 class="card-title" th:text="*{title}"></h5>
-			<p class="card-text" th:text="*{post}"></p>
+			<p class="card-text text-truncate" th:text="*{post}"></p>
 			<a href="/post/reply/new" th:href="@{'/post/{id}/reply/new'(id=${post.id})}" class="icon">
 			<img id="img-reply" src="/images/icons/reply.png" th:src="@{/images/icons/reply.png}" class="card-img-bottom">
 			</a>
@@ -90,6 +86,7 @@ nav.navbar {
 				<button type="button" 
 					class="btn btn-info" th:text="${post.replyList.size()} + '名が回答済'" disabled></button>
 			</div> 
+			</a>
 			<!-- <td th:text="${#dates.format(post.updateDate, 'yyyy/MM/dd')}"></td>
 					<td th:text="${#dates.format(post.createDate, 'yyyy/MM/dd')}"></td> -->
 			<!-- </tr> -->

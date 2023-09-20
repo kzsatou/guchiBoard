@@ -58,6 +58,14 @@ public interface PostMapper {
 	 * @param postForm 登録用リクエストデータ
 	 */
 	void add(PostForm postForm);
+	
+	/**
+	 * 投稿1件検索
+	 * 
+	 * @param Post 検索用リクエストデータ
+	 * @return 検索結果
+	 */
+	List<Post> findOne(long id);
 
 	/*
 	 * Post select(PostForm postForm); //戻り値がPost型

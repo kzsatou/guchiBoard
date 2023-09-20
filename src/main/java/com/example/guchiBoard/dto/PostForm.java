@@ -3,6 +3,7 @@ package com.example.guchiBoard.dto;
 import java.io.Serializable;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -21,12 +22,14 @@ public class PostForm implements Serializable{ //PostForm
 	   /**
   * 投稿タグコード
   */
+   // @NotEmpty(message = "タグを選択してください")
+    @NotNull(message = "タグを選択してください")
     private Long tagCode;
     
 	   /**
   * 投稿タグ
   */
-    @NotEmpty(message = "タグを選択してください")
+		/* @NotEmpty(message = "タグを選択してください") */
     private String tag;
     
     /**
