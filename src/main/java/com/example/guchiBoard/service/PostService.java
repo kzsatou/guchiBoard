@@ -70,19 +70,16 @@ public class PostService {
     }
     
     /**
-     * 投稿登録
+     * 健康診断の表示
      * @param post リクエストデータ
      */
-    public MedicalCheckForm getMedicalCheck(MedicalCheck entity) {
-    	MedicalCheckForm form = modelMapper.map(entity, MedicalCheckForm.class);
-    	
-    	 try (InputStream is = new FileInputStream(new File(entity.getPath()));
-                 ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-             byte[] indata = new byte[10240 * 16];
-             int size;
-             while ((size = is.read(indata, 0, indata.length)) > 0) {
-                 os.write(indata, 0, size);
-             }
-    }
-}
+	/*
+	 * public MedicalCheckForm getMedicalCheck(MedicalCheck entity) {
+	 * MedicalCheckForm form = modelMapper.map(entity, MedicalCheckForm.class);
+	 * 
+	 * try (InputStream is = new FileInputStream(new File(entity.getPath()));
+	 * ByteArrayOutputStream os = new ByteArrayOutputStream()) { byte[] indata = new
+	 * byte[10240 * 16]; int size; while ((size = is.read(indata, 0, indata.length))
+	 * > 0) { os.write(indata, 0, size); } } }
+	 */
 }
