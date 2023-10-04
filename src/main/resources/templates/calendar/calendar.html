@@ -1,55 +1,13 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<!-- layout:decorate="~{layouts/layout}" -->
+<!DOCTYPE HTML>
+<html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- <link rel="stylesheet" href="bootstrap.min.css" /> -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-	crossorigin="anonymous">
-<link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}">
-<style>
-.row {
-	border: 1px solid green;
-}
-
-#img-post {
-	vertical-align: middle;
-	width: 128px;
-}
-#img-karte {
-	vertical-align: middle;
-	width: 128px;
-}
-#img-calender {
-	vertical-align: middle;
-	width: 128px;
-}
-#img-logout{
-	vertical-align: middle;
-	width: 128px;
-}
-#img-reply {
-	vertical-align: middle;
-	width: 32px;
-}
-
-nav.navbar {
-	background-color: rgba(0, 0, 0, 0.5);
-	border: 1px solid transparent;
-	border-color: white;
-	border-width: 0 0 1px;
-	margin-bottom: 20px;
-	padding: 0;
-}
-
-</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>カレンダー</title>
   	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/main.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}">
 	<script>
 	
     document.addEventListener('DOMContentLoaded', function() {
@@ -235,36 +193,51 @@ nav.navbar {
   	    return [year, month, day].join('-');
   	}
 	
+  	/*json型データ受け取りテストコード*/
+  	function getCalendarData(){
+  		//Ajaxでメソッドを呼び出す
+  		$.ajax({
+  			url: "/search",
+  			dataType: "text",
+  			type: "GET",
+  			//Ajaxが正常終了
+  		}).done(function(data, textStatus, jqXHR) {
+  			//該当のデータなし
+  			if(!data){
+  				alert("該当データなし");
+  				return;
+  			}
+  			 // 画面のtableタグの全てのtrタグを削除
+            $('#userDataTbl').find("tr:gt(0)").remove();
+  			//表示
+  			const calendarDataList = JSON.parse(data);
+  			let i = 0;
+  			for(i = 0; i < calendarDataList.length; i++){
+  				let trTag = $("<tr />");
+  				trTag.append($("<td></td>").text(calendarDataList[i].startDate));
+  				trTag.append($("<td></td>").text(calendarDataList[i].endDate));
+  				trTag.append($("<td></td>").text(decodeURI(calendarDataList[i].title)));
+                trTag.append($("<td></td>").text(decodeURI(calendarDataList[i].comment)));
+                $('#userDataTbl').append(trTag);
+             }
+         // Ajaxが異常終了した場合
+         }).fail(function(jqXHR, textStatus, errorThrown ) {
+             alert("エラーが発生し、データが取得できませんでした");
+     });
+  			}
+  		
 	</script>
 </head>
+
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-success">
-		<ul class="navbar-nav ms-auto">
-			<li class="nav-item">
-				<a class="nav-link" th:href="@{/post/new}"　data-bs-toggle="tooltip" data-bs-placement="right" title="新規投稿画面に遷移します">
-					<img id="img-post" src="/images/icons/post.png" th:src="@{/images/icons/post.png}">
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" th:href="@{/medicalcheck/new}"　data-bs-toggle="tooltip" data-bs-placement="right" title="健康診断登録画面に遷移します">
-					<img id="img-karte" src="/images/icons/karte.png" th:src="@{/images/icons/karte.png}">
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" th:href="@{/calendar/calendar}"　data-bs-toggle="tooltip" data-bs-placement="right" title="カレンダー画面に遷移します">
-					<img id="img-calender" src="/images/icons/calendar.png" th:src="@{/images/icons/calendar.png}">
-				</a>
-			</li>
-			<li class="nav-item">
-				<img id="img-logout" src="/images/icons/logout.png" th:src="@{/images/icons/logout.png}">
-			</li>
-		</ul>
-	</nav>
+	<div id="wrap">
+		<main th:replace="layouts/common.html"></main>
+	</div>
 	
 	<div class="container">
 	<!-- カレンダー表示 -->
-	<div class="row">
-	<div class="col-4 " id='calendar'></div>
+
+	<div id='calendar'></div>
 	<div class="modal" id="modal-template">
   	<div class="modal__title">
     	<label>タイトル： <input type="text" id="title"></label>
@@ -283,37 +256,18 @@ nav.navbar {
     <button class="modal-action-buttons close material-icons" id="cancel">cancel</button>
   </div>
 </div>
-	<!-- <div class="row" th:each="post : ${postlist}" th:object="${post}"> -->
-	<!-- <div class="col-lg-8 mt-4"> -->
-	<div class="col-8">
-	<div class="card" th:each="post : ${postlist}" th:object="${post}">
-	<a href="/post/detail" th:href="@{'/post/{id}/detail'(id=${post.id})}" data-bs-toggle="tooltip" data-bs-placement="right" title="クリックで投稿の詳細画面に遷移します">
-	<div class="card-body">
-			<td th:text="*{id}"></td>
-			<!-- <td th:text="*{tag}"></td> -->
-			<button type="button" class="btn btn-info" th:text="*{tag}" disabled></button>
-			<h5 class="card-title" th:text="*{title}"></h5>
-			<p class="card-text text-truncate" th:text="*{post}"></p>
-			<a href="/post/reply/new" th:href="@{'/post/{id}/reply/new'(id=${post.id})}" class="icon">
-			<img id="img-reply" src="/images/icons/reply.png" th:src="@{/images/icons/reply.png}" class="card-img-bottom">
-			</a>
-				<div class="card" th:each="reply, stat : ${post.replyList}" th:object="${reply}">
-					<p class="card-text" th:text="*{replyComments}"></p>
-				</div>
-				
-				<button type="button" 
-					class="btn btn-info" th:text="${post.replyList.size()} + '名が回答済'" disabled></button>
-			</div> 
-			</a>
-			<!-- <td th:text="${#dates.format(post.updateDate, 'yyyy/MM/dd')}"></td>
-					<td th:text="${#dates.format(post.createDate, 'yyyy/MM/dd')}"></td> -->
-			<!-- </tr> -->
-		<!-- </main> -->
-		<!-- </tbody> -->
-		<!-- </table> -->
-		</div>
-	</div>
-	</div>
-	</div>
+
+<!-- テストコード -->
+「検索」ボタンを押下してください。<br/>
+    <input type="button" value="検索" onclick="getCalendarData();" />
+    <br/><br/><br/>
+    ★以下に検索されたデータが表示されます
+    <table id="userDataTbl" border="0">
+        <tr>
+            <th align="left" valign="top" width="180">開始日</th>
+            <th align="left" valign="top" width="160">終了日</th>
+            <th align="left" valign="top" width="60">タイトル</th>
+            <th align="left" valign="top" width="320">コメント</th>
+        </tr>
+    </table>
 </body>
-</html>
