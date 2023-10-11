@@ -1,5 +1,6 @@
 package com.example.guchiBoard.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,20 @@ public class CalendarController {
 		String jsonData = null;
 		
 		List<Calendar> calendar = calendarService.findCalendar();
+		
+		//List<Calendar> calendarList = new ArrayList<>();
+		
+		//型変換
+		
+		/*
+		 * for (int i = 0; i < calendarAll.size(); i++) { Calendar calendar = new
+		 * Calendar(); calendar.setTitle(calendarAll.getTitle()); String createdAt = new
+		 * SimpleDateFormat("yyyy-MM-dd").format(calendar.getCreatedAt());
+		 * calendar.setDisplayOrder(Integer.parseInt(stringModelList.get(i).
+		 * getDisplayOrder())); intModelList.add(intModel); }
+		 */
+		 
+		
 		/*変換を簡単にする*/
 		ObjectMapper mapper = new ObjectMapper();
 		
