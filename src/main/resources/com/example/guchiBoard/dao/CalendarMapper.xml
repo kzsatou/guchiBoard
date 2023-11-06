@@ -10,4 +10,14 @@
 		resultType="com.example.guchiBoard.entity.Calendar">
 		SELECT * FROM calendar
 	</select>
+	
+<!-- カレンダー登録 -->
+	<insert id="addCalendar" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.example.guchiBoard.entity.Calendar">  
+		INSERT INTO calendar
+		(start_date, end_date, title, comment, updated_date, created_date)
+		VALUES
+		(#{startDate}, #{endDate}, #{title}, #{comment},
+		CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+	</insert>
 </mapper>

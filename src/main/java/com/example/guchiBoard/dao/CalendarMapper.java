@@ -18,4 +18,11 @@ public interface CalendarMapper {
 	 * @return 検索結果
 	 */
 	List<Calendar> findCalendar();
+	
+	/**
+	 * カレンダー登録
+	 * @param Calender 登録用リクエストデータ
+	 * @return 登録データ
+	 */
+	void addCalendar(Calendar calendar);
 }

@@ -4,102 +4,87 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>カレンダー</title>
-  	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
-  	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  	<script src="https://unpkg.com/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-  	<script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script>
-  	<script src='https://static.cloudflareinsights.com/beacon.min.js'></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/main.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}">
-	<script>
-	
-    document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth' ,
-       	  locale: 'ja' ,
-       	  timeZone: 'local',
-       	  eventDisplay: 'block',
-       	eventClick: function(info) {
-       	    info.jsEvent.preventDefault(); // don't let the browser navigate
+<script
+	src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<!-- 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script> -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/main.min.css">
+<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+<link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}">
+<script>
+	/*初期画面*/
+	   document.addEventListener('DOMContentLoaded', function() {
+	        var calendarEl = document.getElementById('calendar');
+	        var calendar = new FullCalendar.Calendar(calendarEl, {
+	          initialView: 'dayGridMonth' ,
+	       	  locale: 'ja' ,
+	       	  timeZone: 'local',
+	       	  eventDisplay: 'block',
+	       	  eventClick: function(info) {
+	       	    info.jsEvent.preventDefault(); // don't let the browser navigate
 
-       	    if (info.event.url) {
-       	      window.open(info.event.url);
-       	    }
-       	  },
-       	eventDidMount: function(info) {
-            var tooltip = new Tooltip(info.el, {
-              title: info.event.extendedProps.description,
-              placement: 'top',
-              trigger: 'hover',
-              container: 'body'
-            });
-          },
-       	events: [
-       	    {
-       	      title  : 'event1',
-       	      start  : '2023-10-01',
-       	      url: 'https://google.com/',
-       	      description: '確認'
-       	    },
-       	    {
-       	      title  : 'event2',
-       	      start  : '2023-10-03',
-       	      end    : '2023-10-05',
-       	   	  description: 'test'
-       	    },
-       	    {
-       	      title  : 'event3',
-       	      start  : '2023-10-09T12:30:00',
-       	      allDay : false // will make the time show
-       	    }
-       	  ],
-       	  displayEventTime: false,
-       	  selectable: true,
-          select: arg => {
-       		 initEditModal( arg );
-       		 },
+	       	    if (info.event.url) {
+	       	      window.open(info.event.url);
+	       	    }
+	       	  },
+	       	  eventDidMount: function(info) {
+	            new bootstrap.Tooltip(info.el, {
+	              title: info.event.extendedProps.description,
+	              customClass: 'event-tooltip',
+	            });
+	          },
+	       	  events:{url: '/search'},
+	       	  displayEventTime: false,
+	       	  selectable: true,
+	          select: arg => {
+	       		 initEditModal( arg );
+       		  },
        		  eventClick: arg => {
        		    console.log( arg );
        		    initEditModal( arg );
        		  },
        		  } );
-        calendar.render();
-      });
-    
-    const initEditModal = data  => {
-  	    removeAlreadyModal();
-  	    const defModal = document.getElementById( 'modal-template' );
-  	    const modal = defModal.cloneNode( true );
-  	    modal.id = 'modal';
+	        calendar.render();
+	      });	
+	
+	   /*カレンダーの日付をクリックしたとき*/
+	    const initEditModal = data  => {
+	  	    //removeAlreadyModal();
+	  	    const defModal = document.getElementById( 'modal-template' );
+	  	    const modal = defModal.cloneNode( true );
+	  	    modal.id = 'modal';
 
-  	    setupModalPosition( modal, data.jsEvent );
-  	    document.body.appendChild( modal );
-  	  if ( data.event === undefined ) {
-  	    document.querySelector( '#modal .delete' ).remove();
-  	  }
-  	  
-  	  setupModalData( modal, data );
+	  	    setupModalPosition( modal, data.jsEvent );
+	  	    document.body.appendChild( modal );
+	  	  if ( data.event === undefined ) {
+	  	    document.querySelector( '#modal .delete' ).remove();
+	  	  }
+	  	  
+	  	  	//setupModalData( modal, data ); /*既にあるデータをセットする*/
 
-  	    registerEditModalEvent( modal, data );
-  	};
-
-  	const setupModalPosition = ( modal, e ) => {
-  	    modal.style.display = 'flex';
-  	    modal.style.position = 'absolute';
-  	    modal.style.zIndex = 9999;
-
-  	    const position = calcModalPosition( e );
-  	    modal.style.left = `${position.x}px`;
-  	    modal.style.top = `${position.y}px`;
-  	};
-
+	  	    registerEditModalEvent( modal, data );
+	  	  	cancelRegister(modal);
+	  	};
+	  	
+	  	/*モーダルのポジションをセット*/
+	  	const setupModalPosition = ( modal, e ) => {
+	  	    modal.style.display = 'flex';
+	  	    modal.style.position = 'absolute';
+	  	    modal.style.zIndex = 9999;
+	
+	  	    const position = calcModalPosition( e );
+	  	    modal.style.left = `${position.x}px`;
+	  	    modal.style.top = `${position.y}px`;
+	  	};
+  	
+  	/*モーダルのポジション*/
   	const calcModalPosition = e => {
   	    const windowWidth = window.outerWidth;
 
-  	    const y = e.pageY + 16;
+  	    const y = e.pageY;
   	    let x = e.pageX;
 
   	    if ( e.pageX <= 125 ) {
@@ -115,130 +100,142 @@
   	        y: y
   	    };
   	};
-
-  	const removeAlreadyModal = () => {
-  	    const modal = document.getElementById( 'modal' );
-  	    if ( modal ) {
-  	        modal.remove();
-  	    }
-  	};
-
-  	// モーダル登録処理
+  	
+ 　　/*モーダル登録処理*/
   	const registerEditModalEvent = ( modal, arg ) => {
-  	    const start = modal.querySelector( '#start' );
+  		const start = modal.querySelector( '#start' );
   	    const end = modal.querySelector( '#end' );
-  	  const title = modal.querySelector( '#title' );
-  	    const color = modal.querySelector( '#color' );
-  	  
-  	    // 保存
-  	    const saveButton = modal.querySelector( '#save' );
-  	    alert('確認')
-  	    if ( saveButton ) {
-  	        saveButton.addEventListener( 'click', e => {
-  	            e.preventDefault();
-  	      
-  	      
-  	      if ( arg.event !== undefined ) {
-  	        // 変更時
-  	        const endStrings = end.value && start.value !== end.value ? end.value.split( '-' ) : start.value.split( '-' );
-  	        const endDate = new Date( endStrings[0], parseInt( endStrings[1] ) - 1, endStrings[2], 23, 59, 59 );
+  	 	const title = modal.querySelector( '#title' );
+  	    const description = modal.querySelector( '#description' );
+  	    //保存
+	  	const saveButton = modal.querySelector( '#save' );
+	  	if ( saveButton ) {
+		        saveButton.addEventListener( 'click', e => {
+		            e.preventDefault();
+	      
+	      
+	      if ( arg.event !== undefined ) {
+	        // 変更時
+	        //const endStrings = end.value && start.value !== end.value ? end.value.split( '-' ) : start.value.split( '-' );
+	        //const endDate = new Date( endStrings[0], parseInt( endStrings[1] ) - 1, endStrings[2], 23, 59, 59 );
 
-  	        arg.event.setStart( start.value );
-  	        arg.event.setEnd( endDate );
-  	        arg.event.setProp( 'title', title.value );
-  	        arg.event.setProp( 'backgroundColor', color.value );
-  	      } else {
-  	        // 新規作成時
-  	        alert('保存ボタン確認')
-  	        const endStrings = end.value && start.value !== end.value ? end.value.split( '-' ) : start.value.split( '-' );
-  	        const endDate = new Date( endStrings[0], parseInt( endStrings[1] ) - 1, endStrings[2], 23, 59, 59 );  
-  	        alert('保存する値を送れるか')
-  	        calendar.addEvent( {
-  	          start: start.value,
-  	          end: endDate,
-  	          title: title.value,
-  	          backgroundColor: color.value
-  	        } );
-  	        alert('title')
-  	      }
+	        arg.event.setStart( start.value );
+	        arg.event.setEnd( end.value );
+	        arg.event.setProp( 'title', title.value );
+	        arg.event.setProp( 'description', description.value );
+	      } else {
+	        // 新規作成時
+	        alert('保存ボタン確認')
+	        //const endStrings = end.value && start.value !== end.value ? end.value.split( '-' ) : start.value.split( '-' );
+	        //const endDate = new Date( endStrings[0], parseInt( endStrings[1] ) - 1, endStrings[2], 23, 59, 59 );  
+	      	console.log(title.value);
+	      //送信するデータ
+	  		  const jsondata = JSON.stringify({
+	  			 start: start.value,
+	  	         /* end: endDate, */
+	  	         end: end.value,
+	  	         title: title.value,
+	  	         description: description.value
+	  		    
+	  		  });
+	  	 	console.log(jsondata);
+	  		  //(1)fetch()に渡す第1引数
+	  		  const url = '/add';
+	  		  //(2)fetch()に渡す第2引数
+	  		  const options = {
+	  		    method: 'POST',
+	  		    body: jsondata,
+	  		  headers: {
+	  		      "Content-Type": "application/json",
+	  		  }
+	  		  };
+	  		  //(3)fetch()メソッドの実行
+	  		  fetch(url, options)
+	  		    //レスポンスの受け取り
+	  		    .then(function (response) {
+	  		      //受け取ったデータを返す
+	  		      console.log(response);
+	  		      return response.json();
+	  		    })
+	  		    //受け取ったデータをコンソールに表示
+	  		    .then(function (data) {
+	  		      console.log(data);
+	  			  arg.view.calendar.refetchEvents()
+	  		  	 /*イベント追加*/
+	  		  	/* calendar.addEvent( {
+	  		          start: data.start,
+	  		          end: data.end,
+	  		          title: data.title,
+	  		          description: data.description
+	  		        } ); */
+	  		    });  
+	      	 /* calendar.addEvent( {
+	  	          start: start.value,
+	  	          end: endDate,
+	  	          title: title.value,
+	  	          backgroundColor: color.value
+	  	        } ); */
+	      }
 
-  	            calendar.unselect();
-  	            modal.remove();
-  	        } );
-  	    }
-
-  	    // キャンセル
-  	    const cancelButton = modal.querySelector( '#cancel' );
-  	    cancelButton.addEventListener( 'click', e => {
-  	        e.preventDefault();
-
-  	        calendar.unselect();
-  	        modal.remove();
-  	    } );
-
-  	    // 削除
-  	    const deleteButton = modal.querySelector( '#delete' );
-  	    if ( deleteButton ) {
-
-  	        deleteButton.addEventListener( 'click', e => {
-  	            e.preventDefault();
-  	            arg.event.remove();
-  	            calendar.unselect();
-  	            modal.remove();
-  	        } );
-  	    }
+            //calendar.unselect();
+			modal.remove();
+        } );
+  		}
   	};
+  	
+	    // キャンセル処理
+	    const cancelRegister = modal => {
+	    const cancelButton = modal.querySelector( '#cancel' );
+	    cancelButton.addEventListener( 'click', e => {
+	        e.preventDefault();
 
-  	// モダールに既存イベントを設定
-  	const setupModalData = ( modal, data ) => {
-  	    const start = modal.querySelector( '#start' );
-  	    const end = modal.querySelector( '#end' );
-  	  const title = modal.querySelector( '#title' );
-  	    const color = modal.querySelector( '#color' );
-  	  
-  	  console.log( data );
-  	  if ( data.event !== undefined ) {
-  	    start.value = /T/.test( data.event.startStr ) ? data.event.startStr.split( 'T' )[0] : data.event.startStr;
-  	    end.value = /T/.test( data.event.endStr ) ? data.event.endStr.split( 'T' )[0] : data.event.endStr;
-  	    title.value = data.event.title;
-  	    color.value = data.event.backgroundColor;
-  	  } else {
-  	    start.value = data.startStr;
-  	    
-  	    const diffTime = Math.abs( data.end - data.start );
-  	    const diffDays = Math.ceil( diffTime / ( 1000 * 60 * 60 * 24 ) );
-  	    if ( 1 < diffDays ) {
-  	    
-  	      const endDate = data.end;
-  	      endDate.setDate( endDate.getDate() - 1 );
-  	      end.value = formatDate( endDate );
-  	    }
-  	  }
-  	    
-  	};
-
-  	// DateObject to YYYY-MM-DD
-  	function formatDate(date) {
-  	    var d = new Date(date),
-  	        month = '' + (d.getMonth() + 1),
-  	        day = '' + d.getDate(),
-  	        year = d.getFullYear();
-
-  	    if (month.length < 2) 
-  	        month = '0' + month;
-  	    if (day.length < 2) 
-  	        day = '0' + day;
-
-  	    return [year, month, day].join('-');
-  	}
+	        //calendar.unselect();
+	        modal.remove();
+	    } )
+	    };
 	
-  	/*json型データ受け取りテストコード*/
-  	function getCalendarData(){
-  		//Ajaxでメソッドを呼び出す
-  		$.ajax({
-  			url: "/search",
+   	/*json型データ受け取りテストコード*/
+  	  function getCalendarData(){
+  	 	//送信するデータ
+  		  const jsondata = JSON.stringify({
+  		    title: 'コンバトラーV',
+  		    start: '2023-10-18',
+  		    end: '2023-10-19',
+  		    description: 'test'
+  		    
+  		  });
+  	 	console.log(jsondata);
+  		  //(1)fetch()に渡す第1引数
+  		  const url = '/add';
+  		  //(2)fetch()に渡す第2引数
+  		  const options = {
+  		    method: 'POST',
+  		    body: jsondata,
+  		  headers: {
+  		      "Content-Type": "application/json",
+  		  }
+  		  };
+  		  //(3)fetch()メソッドの実行
+  		  fetch(url, options)
+  		    //レスポンスの受け取り
+  		    .then(function (response) {
+  		      //受け取ったデータを返す
+  		      console.log(response);
+  		    /* const string = response.text(); //awit
+  	      	const json = string === "" ? {} : JSON.parse(string);
+  	      	console.log(json);
+  	      	return json; */
+  		      return response.json();
+  		    })
+  		    //受け取ったデータをコンソールに表示
+  		    .then(function (data) {
+  		      console.log(data);
+  		    }); 
+   		//Ajaxでメソッドを呼び出す
+  		/* $.ajax({
+   			url: "/search",
   			dataType: "text",
-  			type: "GET",
+  			type: "GET", 
   			//Ajaxが正常終了
   		}).done(function(data, textStatus, jqXHR) {
   			//該当のデータなし
@@ -247,7 +244,7 @@
   				return;
   			}
   			 // 画面のtableタグの全てのtrタグを削除
-            $('#userDataTbl').find("tr:gt(0)").remove();
+             $('#userDataTbl').find("tr:gt(0)").remove();
   			//表示
   			const calendarDataList = JSON.parse(data);
   			let i = 0;
@@ -258,55 +255,65 @@
   				trTag.append($("<td></td>").text(decodeURI(calendarDataList[i].title)));
                 trTag.append($("<td></td>").text(decodeURI(calendarDataList[i].comment)));
                 $('#userDataTbl').append(trTag);
-             }
+             } 
          // Ajaxが異常終了した場合
          }).fail(function(jqXHR, textStatus, errorThrown ) {
              alert("エラーが発生し、データが取得できませんでした");
-     });
-  			}
-  		
+     });  */
+  			};	  
 	</script>
+
+<style type="text/css">
+.tooltip.event-tooltip .tooltip-arrow::before {
+	border-top-color: #FFC107;
+}
+
+.tooltip.event-tooltip .tooltip-inner {
+	background: #FFC107;
+	color: black;
+}
+</style>
 </head>
 
 <body>
 	<div id="wrap">
 		<main th:replace="layouts/common.html"></main>
 	</div>
-	
+
 	<div class="container">
-	<!-- カレンダー表示 -->
+		<!-- カレンダー表示 -->
 
-	<div id='calendar'></div>
-	<div class="modal" id="modal-template">
-  	<div class="modal__title">
-    	<label>タイトル： <input type="text" id="title"></label>
-  	</div>
-  	<div class="modal__color">
-    	<label>背景色： <input type="color" id="color"></label>
-  	</div>
- 	<div class="modal__times">
-    	<label>開始：<input type="date" id="start"></label>
-    	<label>終了：<input type="date" id="end"></label>
-  	</div>
-      
-  <div class="modal-action-buttons">
-    <button class="modal-action-buttons__button save" id="save">保存</button>
-    <button class="modal-action-buttons__button delete" id="delete">削除</button>
-    <button class="modal-action-buttons close material-icons" id="cancel">cancel</button>
-  </div>
-</div>
+		<div id='calendar'></div>
+		<div class="modal" id="modal-template">
+			<div class="modal__title">
+				<label>タイトル： <input type="text" id="title"></label>
+			</div>
+			<div class="modal__description">
+				<label>説明： <input type="text" id="description"></label>
+			</div>
+			<div class="modal__times">
+				<label>開始：<input type="date" id="start"></label> <label>終了：<input
+					type="date" id="end"></label>
+			</div>
 
-<!-- テストコード -->
-「検索」ボタンを押下してください。<br/>
-    <input type="button" value="検索" onclick="getCalendarData();" />
-    <br/><br/><br/>
-    ★以下に検索されたデータが表示されます
-    <table id="userDataTbl" border="0">
-        <tr>
-            <th align="left" valign="top" width="180">開始日</th>
-            <th align="left" valign="top" width="160">終了日</th>
-            <th align="left" valign="top" width="60">タイトル</th>
-            <th align="left" valign="top" width="320">コメント</th>
-        </tr>
-    </table>
+			<div class="modal-action-buttons">
+				<button class="modal-action-buttons__button save" id="save">保存</button>
+				<button class="modal-action-buttons__button delete" id="delete">削除</button>
+				<button class="modal-action-buttons close material-icons"
+					id="cancel">×</button>
+			</div>
+		</div>
+
+		<!-- テストコード -->
+		「検索」ボタンを押下してください。<br /> <input type="button" value="検索"
+			onclick="getCalendarData();" /> <br /> <br /> <br />
+		★以下に検索されたデータが表示されます
+		<table id="userDataTbl" border="0">
+			<tr>
+				<th align="left" valign="top" width="180">開始日</th>
+				<th align="left" valign="top" width="160">終了日</th>
+				<th align="left" valign="top" width="60">タイトル</th>
+				<th align="left" valign="top" width="320">コメント</th>
+			</tr>
+		</table>
 </body>

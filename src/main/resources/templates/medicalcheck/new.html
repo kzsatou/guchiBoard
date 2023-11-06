@@ -47,4 +47,24 @@
 				class="btn btn-primary"> 
 		</div>
 		</form>
+		
+		<!-- テスト用コード -->
+		<form th:action="@{/medicalcheck/upload}" th:object="${medicalForm}"
+			th:method="post">
+			
+			<div class="form-group">
+				<label>Id：</label> <input type="text" th:field="*{userId}"
+					class="form-control">
+			</div>
+			<div class="form-group">
+				<label>年度：</label> <input type="text" th:field="*{checkYear}"
+					class="form-control">
+			</div>
+			
+			<br />
+			<input type="submit" value="健康診断結果を回答" 
+				class="btn btn-primary"> 
+		</form>
+		<img th:src="${base64Data}">
+		
 	</div>

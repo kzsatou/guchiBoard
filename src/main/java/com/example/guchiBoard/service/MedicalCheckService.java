@@ -1,9 +1,11 @@
 package com.example.guchiBoard.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,4 +55,13 @@ public class MedicalCheckService {
         
         return path;
   }
+    
+    /**
+     * パス処理
+     * @param multipartFile
+     */
+    public String searchImage(int userId, int checkYear) {	
+    	return medicalMapper.searchImage(userId, checkYear);
+    }
+    
 }

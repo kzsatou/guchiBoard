@@ -3,6 +3,7 @@ package com.example.guchiBoard.dao;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.guchiBoard.dto.MedicalCheckForm;
+import com.example.guchiBoard.entity.MedicalCheck;
 
 /**
  * 投稿 Mapper
@@ -17,4 +18,10 @@ public interface MedicalCheckMapper {
 	 */
 	void addMedical(MedicalCheckForm medicalForm);
 
+	/**
+	 * 検索登録
+	 * 
+	 * @param postForm 登録用リクエストデータ
+	 */
+	String searchImage(int userId, int checkYear);
 }
