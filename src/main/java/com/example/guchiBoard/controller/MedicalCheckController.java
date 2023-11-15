@@ -85,14 +85,15 @@ public class MedicalCheckController {
 		String imgFilePath = medicalService.searchImage(userId, checkYear);
 		
 		File fileImg = new File(imgFilePath);
+		//File fileImg = new File("C:/uploads/AkihabaraKousaten.jpg");
 		try {
 			byte[] byteImg = Files.readAllBytes(fileImg.toPath());
 			String base64Data = Base64.getEncoder().encodeToString(byteImg);
-			model.addAttribute("base64Data","data:image/png;base64,"+base64Data);
+			model.addAttribute("base64Data","data:image/jpeg;base64,"+base64Data);
 		}catch(IOException e) {
 			return null;
 		}
-		return "image";
+		return "redirect:/medicalcheck/new";
 	}
 	
 }

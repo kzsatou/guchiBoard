@@ -22,7 +22,7 @@
 	
 <!-- 新規健康診断結果表示 -->	
 	<select id="searchImage" 
-		resultType="com.example.guchiBoard.entity.MedicalCheck">  
+		resultType="String">  
 		SELECT picture_path from medical_check where user_id=#{param1} AND year=#{param2}
 	</select>
 </mapper>
