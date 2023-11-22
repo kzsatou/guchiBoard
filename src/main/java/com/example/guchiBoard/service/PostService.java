@@ -61,6 +61,14 @@ public class PostService {
     }
     
     /**
+     * 投稿タグからコメントを検索して表示
+     * @return 検索結果
+     */
+    public List<Post> findtagComment(long tagCode) {
+        return postMapper.findtagComment(tagCode);
+    }
+    
+    /**
      * 投稿登録
      * @param post リクエストデータ
      */

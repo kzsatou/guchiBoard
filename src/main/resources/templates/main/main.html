@@ -286,11 +286,27 @@ nav.navbar {
 	<!-- <div class="row" th:each="post : ${postlist}" th:object="${post}"> -->
 	<!-- <div class="col-lg-8 mt-4"> -->
 	<div class="col-8">
-	<div class="card" th:each="post : ${postlist}" th:object="${post}">
+	
+	<!-- タグの表示 -->
+	<div class="form-group">
+        <label>タグ：</label>
+<!-- 		<form class="form-select" th:field="*{tagCode}" 
+			th:action="@{/tagsearch}" th:object="${postForm}" th:method="post"> -->
+		<form class="form-select" 
+			th:action="@{/post/tagsearch}" th:method="post">
+    	<b>メニュー</b>
+    	<!-- <input type="checkbox" class="btn btn-outline-primary" name="tag" th:each="tags : ${tagslist}" th:value="${tags.id}"
+					th:text="${tags.tag}" th:selected="${tags.id == selectedValue}"> -->
+		
+    	<input type="submit" class="submit_button">送信
+  		</form>
+	 </div>
+	
+<!-- 	<div class="card" th:each="post : ${postlist}" th:object="${post}">
 	<a href="/post/detail" th:href="@{'/post/{id}/detail'(id=${post.id})}" data-bs-toggle="tooltip" data-bs-placement="right" title="クリックで投稿の詳細画面に遷移します">
 	<div class="card-body">
 			<td th:text="*{id}"></td>
-			<!-- <td th:text="*{tag}"></td> -->
+			<td th:text="*{tag}"></td>
 			<button type="button" class="btn btn-info" th:text="*{tag}" disabled></button>
 			<h5 class="card-title" th:text="*{title}"></h5>
 			<p class="card-text text-truncate" th:text="*{post}"></p>
@@ -305,13 +321,9 @@ nav.navbar {
 					class="btn btn-info" th:text="${post.replyList.size()} + '名が回答済'" disabled></button>
 			</div> 
 			</a>
-			<!-- <td th:text="${#dates.format(post.updateDate, 'yyyy/MM/dd')}"></td>
-					<td th:text="${#dates.format(post.createDate, 'yyyy/MM/dd')}"></td> -->
-			<!-- </tr> -->
-		<!-- </main> -->
-		<!-- </tbody> -->
-		<!-- </table> -->
-		</div>
+		</div> -->
+
+<!-- ここまで投稿一覧表示(一旦削除) -->
 	</div>
 	</div>
 	</div>

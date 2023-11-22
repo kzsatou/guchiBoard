@@ -58,6 +58,12 @@ public class PostController {
 			  }
 		 
 		model.addAttribute("postForm", new PostForm());
+		
+		//タグの表示,追加機能
+		List<Tags> tagsList = postService.findtagsAll();
+		model.addAttribute("tagslist", tagsList);
+		//追加機能
+		
 		return "main/main";
 	}
 
@@ -130,4 +136,20 @@ public class PostController {
 		/* selectで表示する、ボタン押下で処理が通るかどうか */
 		return "redirect:/main";
 	}
+	
+	/**
+	 * 選択したタグのあるコメント一覧画面を表示
+	 * 
+	 * @param model Model
+	 * @return コメント画面
+	 */
+	@RequestMapping(value = "/post/tagsearch", method = RequestMethod.POST)
+	 public String tagSearch(@Validated @ModelAttribute PostForm postForm, long tagCode, BindingResult result,
+			  Model model) {
+		
+		System.out.println("tagSearchの確認"); 
+		List<Post> postTagList = postService.findtagComment(tagCode);
+		model.addAttribute("posttaglist", postTagList);
+		return "/post/tagComment";
+ 	}
 }

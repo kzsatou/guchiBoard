@@ -66,6 +66,14 @@ public interface PostMapper {
 	 * @return 検索結果
 	 */
 	List<Post> findOne(long id);
+	
+	/**
+	 * 投稿タグ検索
+	 * 
+	 * @param tagCode 検索用リクエストデータ
+	 * @return 検索結果
+	 */
+	List<Post> findtagComment(long tagCode);
 
 	/*
 	 * Post select(PostForm postForm); //戻り値がPost型

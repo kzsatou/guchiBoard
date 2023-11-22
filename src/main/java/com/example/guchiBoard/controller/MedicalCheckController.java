@@ -57,7 +57,7 @@ public class MedicalCheckController {
 		//String filePath = medicalService.saveImageLocal(mFile);
 		
 		//ユーザーIDをテスト用に生成
-		long n = 1;
+		long n = 2;
 		medicalForm.setUserId(n);
 		//medicalForm.setPdfPath(filePath);
 		medicalForm.setPicturePath(filePath);
@@ -89,11 +89,13 @@ public class MedicalCheckController {
 		try {
 			byte[] byteImg = Files.readAllBytes(fileImg.toPath());
 			String base64Data = Base64.getEncoder().encodeToString(byteImg);
-			model.addAttribute("base64Data","data:image/jpeg;base64,"+base64Data);
+			medicalForm = new MedicalCheckForm();
+			model.addAttribute("medicalForm",medicalForm);
+			model.addAttribute("base64Data","data:application/pdf;base64,"+base64Data);
+			//model.addAttribute("pdf","data:application/pdf;base64,"+base64Data);
 		}catch(IOException e) {
 			return null;
 		}
-		return "redirect:/medicalcheck/new";
+		return "/medicalcheck/new";
 	}
-	
 }
