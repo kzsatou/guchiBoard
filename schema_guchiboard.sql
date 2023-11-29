@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS medical_check (
 	id SERIAL NOT NULL,
     user_id int NOT NULL,
     year int NOT NULL,
+    display boolean NOT NULL default 'FALSE',
     pdf_path varchar(255) NOT NULL default 'default',
     picture_path varchar(255) NOT NULL default 'default',
     url_path varchar(255) NOT NULL default 'default',

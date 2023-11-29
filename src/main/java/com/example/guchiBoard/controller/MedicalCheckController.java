@@ -66,36 +66,26 @@ public class MedicalCheckController {
 		return "redirect:/main";
 	}
 	
-	/**
-	 * 健康診断表示
-	 * 
-	 * @param userRequest リクエストデータ
-	 * @param model       Model
-	 * @return 投稿一覧画面
-	 */
-	@RequestMapping(value = "/medicalcheck/upload", method = RequestMethod.POST)
+	
     /**
      * 画像表示処理
      * @param multipartFile
      */
-	public String outputImage(@ModelAttribute MedicalCheckForm medicalForm, int userId, int checkYear, Model model) throws IOException {
-		System.out.println("methodの確認"); 
-		System.out.println(userId); 
-		System.out.println(checkYear); 
-		String imgFilePath = medicalService.searchImage(userId, checkYear);
-		
-		File fileImg = new File(imgFilePath);
-		//File fileImg = new File("C:/uploads/AkihabaraKousaten.jpg");
-		try {
-			byte[] byteImg = Files.readAllBytes(fileImg.toPath());
-			String base64Data = Base64.getEncoder().encodeToString(byteImg);
-			medicalForm = new MedicalCheckForm();
-			model.addAttribute("medicalForm",medicalForm);
-			model.addAttribute("base64Data","data:application/pdf;base64,"+base64Data);
-			//model.addAttribute("pdf","data:application/pdf;base64,"+base64Data);
-		}catch(IOException e) {
-			return null;
-		}
-		return "/medicalcheck/new";
-	}
+	/*
+	 * @RequestMapping(value = "/medicalcheck/upload", method = RequestMethod.POST)
+	 * public String outputImage(@ModelAttribute MedicalCheckForm medicalForm, int
+	 * userId, int checkYear, Model model) throws IOException {
+	 * System.out.println("methodの確認"); System.out.println(userId);
+	 * System.out.println(checkYear); String imgFilePath =
+	 * medicalService.searchImage(userId, checkYear);
+	 * 
+	 * File fileImg = new File(imgFilePath); //File fileImg = new
+	 * File("C:/uploads/AkihabaraKousaten.jpg"); try { byte[] byteImg =
+	 * Files.readAllBytes(fileImg.toPath()); String base64Data =
+	 * Base64.getEncoder().encodeToString(byteImg); medicalForm = new
+	 * MedicalCheckForm(); model.addAttribute("medicalForm",medicalForm);
+	 * model.addAttribute("base64Data","data:application/pdf;base64,"+base64Data);
+	 * //model.addAttribute("pdf","data:application/pdf;base64,"+base64Data);
+	 * }catch(IOException e) { return null; } return "/medicalcheck/new"; }
+	 */
 }

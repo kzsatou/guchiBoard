@@ -17,11 +17,19 @@ public interface MedicalCheckMapper {
 	 * @param postForm 登録用リクエストデータ
 	 */
 	void addMedical(MedicalCheckForm medicalForm);
+	
+	/**
+	 * 表示有効/無効
+	 * 
+	 * @param postForm 登録用リクエストデータ
+	 */
+	void displayMedical(int userId, int checkYear);
 
 	/**
 	 * 検索登録
 	 * 
 	 * @param postForm 登録用リクエストデータ
 	 */
-	String searchImage(int userId, int checkYear);
+	//String searchImage(int userId, int checkYear);
+	String searchImage(int userId);
 }

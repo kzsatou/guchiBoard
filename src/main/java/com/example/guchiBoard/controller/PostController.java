@@ -1,6 +1,9 @@
 package com.example.guchiBoard.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -17,11 +20,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.example.guchiBoard.dto.MedicalCheckForm;
 import com.example.guchiBoard.dto.PostForm;
 import com.example.guchiBoard.dto.ReplyForm;
 import com.example.guchiBoard.entity.Post;
 import com.example.guchiBoard.entity.Reply;
 import com.example.guchiBoard.entity.Tags;
+import com.example.guchiBoard.service.MedicalCheckService;
 import com.example.guchiBoard.service.PostService;
 import com.example.guchiBoard.config.AppConfig;
 
@@ -36,10 +41,15 @@ public class PostController {
 	 */
 	@Autowired
 	private PostService postService;
+	@Autowired
+	private MedicalCheckService medicalcheckService;
 
 	
 	@Autowired 
 	private ModelMapper modelMapper;
+	
+	//画像が表示されるのが有効、後でDBに追加
+	boolean mFile = false;
 	 
 	/**
 	 * メイン画面を表示
@@ -90,10 +100,25 @@ public class PostController {
 	 * @return 投稿詳細画面
 	 */
 	@RequestMapping(value = "/post/{postId}/detail")
-	public String newComment(@PathVariable("postId") long postId, Model model, Post form) {
+	public String newComment(@ModelAttribute MedicalCheckForm medicalForm, @PathVariable("postId") long postId, Model model, Post form) {
 
+		medicalForm = new MedicalCheckForm(); 
+		model.addAttribute("medicalForm",medicalForm);
 		List<Post> postOne = postService.findOne(postId);
 		/*ファイルを表示する処理(仮)*/
+		//userIDを取得する(認証機能実装後に正式な処理を実装,postIDからユーザーIDを特定する?)
+		int userId = 2;
+		String base64Data = "";
+		//表示有効にしている健康診断結果のみ表示
+		try {
+			base64Data = medicalcheckService.outputImage(userId);
+		}catch(IOException e) {
+			//例外処理
+			base64Data = "";
+		}
+		
+		model.addAttribute("base64Data","data:application/pdf;base64,"+base64Data);
+		//model.addAttribute("pdf","data:application/pdf;base64,"+base64Data);
 		
 		model.addAttribute("postOne", postOne);
 
@@ -144,12 +169,23 @@ public class PostController {
 	 * @return コメント画面
 	 */
 	@RequestMapping(value = "/post/tagsearch", method = RequestMethod.POST)
-	 public String tagSearch(@Validated @ModelAttribute PostForm postForm, long tagCode, BindingResult result,
-			  Model model) {
+	 public String tagSearch(@ModelAttribute PostForm postForm, long tagCode, Model model) throws IOException{
 		
+		//long tagCode = 1;
 		System.out.println("tagSearchの確認"); 
 		List<Post> postTagList = postService.findtagComment(tagCode);
 		model.addAttribute("posttaglist", postTagList);
 		return "/post/tagComment";
  	}
+	
+    /**
+     * 公開設定
+     * @param userID,year
+     */
+	@RequestMapping(value = "/post/display", method = RequestMethod.POST)
+	public String displayCheck(@ModelAttribute MedicalCheckForm medicalForm, int userId, int checkYear, Model model) throws IOException {
+		System.out.println("/post/displayの確認"); 
+		medicalcheckService.displayMedical(userId, checkYear);
+		return "main";
+	}
 }

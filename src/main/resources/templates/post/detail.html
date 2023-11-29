@@ -6,6 +6,13 @@
 <title>投稿詳細</title>
 </head>
 
+<style>
+#img-reply {
+	vertical-align: middle;
+	width: 32px;
+}
+</style>
+
 <body>
 	<div id="wrap">
 		<main th:replace="layouts/common.html"></main>
@@ -16,11 +23,38 @@
 			<button type="button" class="btn btn-info" th:text="*{tag}" disabled></button>
 			<h5 class="card-title" th:text="*{title}"></h5>
 			<p class="card-text" th:text="*{post}"></p>
+
 				<div class="card" th:each="reply, stat : ${post.replyList}" th:object="${reply}">
 					<p class="card-text" th:text="*{replyComments}"></p>
 				</div>
 				
 				<button type="button" 
 					class="btn btn-info" th:text="${post.replyList.size()} + '名が回答済'" disabled></button>
+					
+			<a href="/post/reply/new" th:href="@{'/post/{id}/reply/new'(id=${post.id})}" class="icon">
+				<img id="img-reply" src="/images/icons/reply.png" th:src="@{/images/icons/reply.png}" class="card-img-bottom">
+			</a>
 </div> 
+
+<br />
+
+	<!-- テスト用コード -->
+		<form th:action="@{/post/display}" th:object="${medicalForm}"
+			th:method="post">
+			
+			<div class="form-group">
+				<label>Id：</label> <input type="text" th:field="*{userId}"
+					class="form-control">
+			</div>
+			<div class="form-group">
+				<label>年度：</label> <input type="text" th:field="*{checkYear}"
+					class="form-control">
+			</div>
+			
+			<br />
+			<input type="submit" value="健康診断結果を回答" 
+				class="btn btn-primary"> 
+		</form>
+<br />
+		<iframe th:src="${base64Data}" width="100%" height="100%"></iframe> 
 </body>

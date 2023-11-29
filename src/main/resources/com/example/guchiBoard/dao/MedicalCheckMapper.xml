@@ -19,10 +19,17 @@
 		(#{userId}, #{checkYear}, #{picturePath}, 
 		CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 	</insert>
-	
+
+<!-- 新規健康診断結果表示/非表示 -->	
+	<insert id="displayMedical" 
+		parameterType="com.example.guchiBoard.dto.MedicalCheckForm">  
+		UPDATE medical_check SET display = 'TRUE'
+		where user_id=#{param1} AND year=#{param2}
+	</insert>
 <!-- 新規健康診断結果表示 -->	
 	<select id="searchImage" 
 		resultType="String">  
-		SELECT picture_path from medical_check where user_id=#{param1} AND year=#{param2}
+		<!-- SELECT picture_path from medical_check where user_id=#{param1} AND year=#{param2} -->
+		SELECT picture_path from medical_check where user_id=#{param1} AND display=TRUE
 	</select>
 </mapper>
