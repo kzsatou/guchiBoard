@@ -17,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -26,8 +27,12 @@ import com.example.guchiBoard.dto.ReplyForm;
 import com.example.guchiBoard.entity.Post;
 import com.example.guchiBoard.entity.Reply;
 import com.example.guchiBoard.entity.Tags;
+import com.example.guchiBoard.service.DownloadService;
 import com.example.guchiBoard.service.MedicalCheckService;
 import com.example.guchiBoard.service.PostService;
+
+import jakarta.servlet.http.HttpServletResponse;
+
 import com.example.guchiBoard.config.AppConfig;
 
 /**
@@ -43,6 +48,8 @@ public class PostController {
 	private PostService postService;
 	@Autowired
 	private MedicalCheckService medicalcheckService;
+	@Autowired
+	private DownloadService downloadService;
 
 	
 	@Autowired 
@@ -188,4 +195,22 @@ public class PostController {
 		medicalcheckService.displayMedical(userId, checkYear);
 		return "main";
 	}
+	
+    /**
+     * ダウンロード
+     * @param userID,year
+     */
+	/**
+	 * ファイルアップロードAPI
+	 * @param file アップロードしたファイル
+	 */
+	@PostMapping(value = "/downloadFile")
+	public void downloadFile(HttpServletResponse response) {
+		//userIDを取得する(認証機能実装後に正式な処理を実装,postIDからユーザーIDを特定する?)
+		//処理方法については考える
+		int userId = 2;
+		String imgFilePath;
+		imgFilePath = medicalcheckService.searchImage(userId);
+		downloadService.fileDownload(response, imgFilePath);
+	}	
 }

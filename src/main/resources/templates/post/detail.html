@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>投稿詳細</title>
-</head>
 
 <style>
 #img-reply {
@@ -13,48 +12,126 @@
 }
 </style>
 
+</head>
+
 <body>
 	<div id="wrap">
 		<main th:replace="layouts/common.html"></main>
 	</div>
-	
-<div class="card" th:each="post : ${postOne}" th:object="${post}">
-	<td th:text="*{id}"></td>
-			<button type="button" class="btn btn-info" th:text="*{tag}" disabled></button>
-			<h5 class="card-title" th:text="*{title}"></h5>
-			<p class="card-text" th:text="*{post}"></p>
 
-				<div class="card" th:each="reply, stat : ${post.replyList}" th:object="${reply}">
-					<p class="card-text" th:text="*{replyComments}"></p>
-				</div>
-				
-				<button type="button" 
-					class="btn btn-info" th:text="${post.replyList.size()} + '名が回答済'" disabled></button>
-					
-			<a href="/post/reply/new" th:href="@{'/post/{id}/reply/new'(id=${post.id})}" class="icon">
-				<img id="img-reply" src="/images/icons/reply.png" th:src="@{/images/icons/reply.png}" class="card-img-bottom">
-			</a>
-</div> 
+	<div class="card" th:each="post : ${postOne}" th:object="${post}">
+		<td th:text="*{id}"></td>
+		<button type="button" class="btn btn-info" th:text="*{tag}" disabled></button>
+		<h5 class="card-title" th:text="*{title}"></h5>
+		<p class="card-text" th:text="*{post}"></p>
 
-<br />
+		<div class="card" th:each="reply, stat : ${post.replyList}"
+			th:object="${reply}">
+			<p class="card-text" th:text="*{replyComments}"></p>
+		</div>
+
+		<button type="button" class="btn btn-info"
+			th:text="${post.replyList.size()} + '名が回答済'" disabled></button>
+
+		<a href="/post/reply/new"
+			th:href="@{'/post/{id}/reply/new'(id=${post.id})}" class="icon">
+			<img id="img-reply" src="/images/icons/reply.png"
+			th:src="@{/images/icons/reply.png}" class="card-img-bottom">
+		</a>
+	</div>
+
+	<br />
 
 	<!-- テスト用コード -->
-		<form th:action="@{/post/display}" th:object="${medicalForm}"
-			th:method="post">
-			
-			<div class="form-group">
-				<label>Id：</label> <input type="text" th:field="*{userId}"
-					class="form-control">
-			</div>
-			<div class="form-group">
-				<label>年度：</label> <input type="text" th:field="*{checkYear}"
-					class="form-control">
-			</div>
-			
-			<br />
-			<input type="submit" value="健康診断結果を回答" 
-				class="btn btn-primary"> 
-		</form>
-<br />
-		<iframe th:src="${base64Data}" width="100%" height="100%"></iframe> 
+	<form th:action="@{/post/display}" th:object="${medicalForm}"
+		th:method="post">
+
+		<div class="form-group">
+			<label>Id：</label> <input type="text" th:field="*{userId}"
+				class="form-control">
+		</div>
+		<div class="form-group">
+			<label>年度：</label> <input type="text" th:field="*{checkYear}"
+				class="form-control">
+		</div>
+
+		<br /> <input type="submit" value="健康診断結果を回答" class="btn btn-primary">
+	</form>
+	<br />
+	<!-- ダウンロードテスト用コード -->
+	<button type="button" id="btn">ダウンロード</button>
+
+	<dialog>
+	<p>ダウンロードしますか？</p>
+	<button id="yes">はい</button>
+	<button id="no">いいえ</button>
+	</dialog>
+	
+<!-- js一旦ベタ打ち -->
+	<script>
+		let dialog = document.querySelector('dialog');
+		let btn = document.getElementById('btn');
+		let yes = document.getElementById('yes');
+		let no = document.getElementById('no');
+
+		btn.addEventListener('click', function() {
+			// 開くボタンをクリックした場合の処理
+			dialog.showModal();
+		}, false);
+
+		yes.addEventListener('click', function() {
+			// はいボタンをクリックした場合の処理
+			// 通常のJavascriptで実装
+			getDataXMLHttpRequest();
+			// jQueryで実装
+			// getDatajQuery();
+			dialog.close();
+
+		}, false);
+
+		no.addEventListener('click', function() {
+			// いいえボタンをクリックした場合の処理    
+			dialog.close();
+		}, false);
+
+		/**
+		 * 普通のJavascriptで実装
+		 */
+		function getDataXMLHttpRequest() {
+
+			let xmlhttp = new XMLHttpRequest();
+
+			xmlhttp.onload = function(data) {
+				let filename = "";
+				// サーバ側で設定したファイル名を正規表現で取得
+				let disposition = xmlhttp
+						.getResponseHeader('Content-Disposition');
+				if (disposition && disposition.indexOf('attachment') !== -1) {
+					let filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+					let matches = filenameRegex.exec(disposition);
+					if (matches != null && matches[1]) {
+						filename = matches[1].replace(/['"]/g, '');
+					}
+				}
+				let blob = new Blob([ data.target.response ]);
+				let objURL = window.URL.createObjectURL(blob);
+				// リンクを生成し、JavaScriptからクリック
+				let a = document.createElement("a");
+				document.body.appendChild(a);
+				a.href = objURL;
+				a.download = filename;
+				a.click();
+			}
+
+			xmlhttp.onerror = function() {
+				alert("失敗");
+			}
+
+			xmlhttp.open("POST", "/downloadFile", true);
+			xmlhttp.send();
+		}
+	</script>
+
+	<br />
+	<iframe th:src="${base64Data}" width="100%" height="100%"></iframe>
 </body>

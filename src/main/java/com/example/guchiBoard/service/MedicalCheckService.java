@@ -112,5 +112,5 @@ public class MedicalCheckService {
 		}
 		return base64Data;
 	}
-    
+	
 }
