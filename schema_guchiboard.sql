@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS post_tags;
 DROP TABLE IF EXISTS reply_comments;
 DROP TABLE IF EXISTS medical_check;
 DROP TABLE IF EXISTS calender;
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE IF NOT EXISTS post_test (
     id SERIAL NOT NULL,
@@ -58,6 +59,7 @@ CREATE TABLE IF NOT EXISTS users (
     email           VARCHAR(100)    UNIQUE NOT NULL,
     password        VARCHAR(255)    NOT NULL,
     name            VARCHAR(100)    NOT NULL,
+    roles           VARCHAR(100),
     created_date timestamp NOT NULL,
     updated_date timestamp NOT NULL,
     PRIMARY KEY (id)

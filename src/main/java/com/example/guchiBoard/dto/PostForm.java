@@ -26,6 +26,11 @@ public class PostForm implements Serializable{ //PostForm
     @NotNull(message = "タグを選択してください")
     private Long tagCode;
     
+	 /**
+	  * 投稿タグコード(複数)
+	 */
+    private Long[] tagCodes;
+    
 	   /**
   * 投稿タグ
   */

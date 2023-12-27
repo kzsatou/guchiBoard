@@ -295,7 +295,7 @@ nav.navbar {
 <!-- 		<form class="form-select" 
 			th:action="@{/post/tagsearch}" th:method="post"> -->
     	 <input type="checkbox" class="btn btn-outline-primary" name="tag" th:each="tags : ${tagslist}" th:value="${tags.id}"
-					th:text="${tags.tag}" th:field="*{tagCode}" value="${tags.id == selectedValue}"> 
+					th:text="${tags.tag}" th:field="*{tagCodes}" value="${tags.id == selectedValue}"> 
     	<input type="submit" class="submit_button">送信
   		</form>
 	 </div> 
@@ -325,5 +325,7 @@ nav.navbar {
 	</div>
 	</div>
 	</div>
+	
+<!-- ユーザー処理テスト -->
 </body>
 </html>

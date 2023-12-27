@@ -12,14 +12,16 @@
 	</div>
 	
 <div class="card" th:each="post : ${posttaglist}" th:object="${post}">
+<!-- 画面遷移 -->
+<a href="/post/detail" th:href="@{'/post/{id}/detail'(id=${post.id})}" data-bs-toggle="tooltip" data-bs-placement="right" title="クリックで投稿の詳細画面に遷移します">
 	<td th:text="*{id}"></td>
 			<h5 class="card-title" th:text="*{title}"></h5>
 			<p class="card-text" th:text="*{post}"></p>
  				<div class="card" th:each="reply, stat : ${post.replyList}" th:object="${reply}">
 					<p class="card-text" th:text="*{replyComments}"></p>
 				</div>
-				
-				<!-- <button type="button" 
-					class="btn btn-info" th:text="${post.replyList.size()} + '名が回答済'" disabled></button> -->
+				</a>
+				<button type="button" 
+					class="btn btn-info" th:text="${post.replyList.size()} + '名が回答済'" disabled></button> 
 </div> 
 </body>

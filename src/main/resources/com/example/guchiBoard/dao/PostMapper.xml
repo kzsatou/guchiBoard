@@ -104,8 +104,40 @@
 	</insert>
 	
 		<!-- タグからコメント検索して表示 -->
+	<resultMap id="postTagMap" type="com.example.guchiBoard.entity.Post" autoMapping="true">
+		<id property="id" column="id" />
+		<result property="tagCode" column="tag_code" />
+		<result property="tag" column="tag" />
+		<result property="title" column="title" />
+		<result property="post" column="post" />
+		<result property="createDate" column="created_date" />
+		<result property="updateDate" column="updated_date" />
+		<!-- javaType="ArrayList" -->
+		<collection property="replyList" ofType="com.example.guchiBoard.entity.Reply" columnPrefix="reply_">
+			<id property="id" column="id" />
+			<result property="postId" column="post_id" />
+			<result property="replyComments" column="comments" />
+			<result property="createDate" column="created_date" />
+			<result property="updateDate" column="updated_date" />
+		</collection>
+	</resultMap>
+	
 	<select id="findtagComment"
-		resultType="com.example.guchiBoard.entity.Post">
-		SELECT * FROM post_test WHERE post_test.tag_code = #{tag_code}
+		resultType="com.example.guchiBoard.entity.Post" resultMap="postTagMap">
+		<!-- SELECT * FROM post_test WHERE post_test.tag_code = #{tag_code} -->
+		SELECT
+			post_test.id,
+			post_test.tag_code,
+			post_test.title,
+			post_test.post,
+			post_tags.tag,
+			reply_comments.post_id as reply_post_id,
+			reply_comments.comments as reply_comments,
+			reply_comments.created_date as reply_created_date,
+			reply_comments.updated_date as reply_updated_date
+		FROM post_test
+			LEFT OUTER JOIN post_tags ON post_test.tag_code = post_tags.id
+			LEFT OUTER JOIN reply_comments ON post_test.id = reply_comments.post_id
+		WHERE post_test.tag_code = #{tag_code}
 	</select>
 </mapper>

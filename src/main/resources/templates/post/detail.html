@@ -127,11 +127,23 @@
 				alert("失敗");
 			}
 
-			xmlhttp.open("POST", "/downloadFile", true);
-			xmlhttp.send();
+			/* xmlhttp.open("POST", "/downloadFile", true); */
+			/* csfr対策 */
+			xmlhttp.open('POST','/downloadFile');
+			xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			xmlhttp.withCredentials = true;
+			xmlhttp.send('text=csrf%20test');
+			/* xmlhttp.send(); */
 		}
 	</script>
 
 	<br />
-	<iframe th:src="${base64Data}" width="100%" height="100%"></iframe>
+	<!-- <iframe th:src="${base64Data}" width="100%" height="100%"></iframe> -->
+	<!-- <link type="button" href="${base64Data}" width="100%" height="100%">pdf</link> -->
+	<!-- <input type="button" name="SUBMIT" th:attr="onClick='location.href=\''+${base64Data}+'\''"> -->
+	<!-- <button th:onclick="'location.href="${base64Data}">
+  	ボタン
+	</button> -->
+	<link rel="icon" th:href="@{/uploads/sample.pdf}">
+<a th:href="@{/uploads/sample.pdf}">pdf</a>
 </body>

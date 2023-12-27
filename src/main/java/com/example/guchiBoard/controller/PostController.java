@@ -176,11 +176,16 @@ public class PostController {
 	 * @return コメント画面
 	 */
 	@RequestMapping(value = "/post/tagsearch", method = RequestMethod.POST)
-	 public String tagSearch(@ModelAttribute PostForm postForm, long tagCode, Model model) throws IOException{
+	 public String tagSearch(@ModelAttribute PostForm postForm, long[] tagCodes, Model model) throws IOException{
 		
 		//long tagCode = 1;
 		System.out.println("tagSearchの確認"); 
-		List<Post> postTagList = postService.findtagComment(tagCode);
+		List<Post> postTagList = new ArrayList<Post>();
+		for (int i = 0; i < tagCodes.length; i++){
+			postTagList.addAll(postService.findtagComment(tagCodes[i]));
+		}
+		//List<Post> postTagList = postService.findtagComment(tagCodes[0]);
+		//postTagList.addAll(postService.findtagComment(tagCodes[1]));
 		model.addAttribute("posttaglist", postTagList);
 		return "/post/tagComment";
  	}
@@ -208,9 +213,11 @@ public class PostController {
 	public void downloadFile(HttpServletResponse response) {
 		//userIDを取得する(認証機能実装後に正式な処理を実装,postIDからユーザーIDを特定する?)
 		//処理方法については考える
+		System.out.println("downloadFile");
 		int userId = 2;
 		String imgFilePath;
-		imgFilePath = medicalcheckService.searchImage(userId);
+		//imgFilePath = medicalcheckService.searchImage(userId);
+		imgFilePath = "./src/main/webapp/uploads/sample_.pdf";
 		downloadService.fileDownload(response, imgFilePath);
 	}	
 }
