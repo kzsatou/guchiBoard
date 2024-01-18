@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.guchiBoard.dao.MedicalCheckMapper;
 import com.example.guchiBoard.dto.MedicalCheckForm;
+import com.example.guchiBoard.entity.MedicalCheck;
 
 /**
  * 投稿 Service
@@ -77,6 +79,22 @@ public class MedicalCheckService {
     public void displayMedical(int userId, int checkYear) {
     	medicalMapper.displayMedical(userId, checkYear);
     }
+    
+    /**
+     * 非公開設定
+     * @param year,userID
+     */
+    public void hideMedical(int userId, int checkYear) {
+    	medicalMapper.hideMedical(userId, checkYear);
+    }
+    
+    /**
+     * ダウンローダー公開設定
+     * @param year,userID
+     */
+	  public List<MedicalCheck> downloaderMedical(int userId) { return
+	  medicalMapper.downloaderMedical(userId); }
+	 
     
     /**
      * 健康診断の表示

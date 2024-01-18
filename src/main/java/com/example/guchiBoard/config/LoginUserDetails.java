@@ -13,12 +13,14 @@ import lombok.EqualsAndHashCode;
   
   @EqualsAndHashCode 
   public class LoginUserDetails implements UserDetails {
+  private final long id;
   private final String email; 
   private final String password; 
   private final String name; 
   private final Collection <? extends GrantedAuthority> authorities;
   
   public LoginUserDetails(User user) { 
+	  this.id = user.getId();
 	  this.email = user.getEmail();
 	  this.password = user.getPassword(); 
 	  this.name = user.getName();
@@ -27,12 +29,16 @@ import lombok.EqualsAndHashCode;
 			  .toList(); 
 	  }
   
+  public long getId() { // ユーザーidを返す 
+	  return id; 
+	  }
+  
   @Override 
   public Collection<? extends GrantedAuthority> getAuthorities() { //  ロールのコレクションを返す
 	return authorities; 
 	}
   
-  @Override 
+  @Override   
   public String getPassword() { // パスワードを返す 
 	  return password; 
 	  }

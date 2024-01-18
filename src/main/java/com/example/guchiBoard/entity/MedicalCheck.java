@@ -21,7 +21,7 @@ public class MedicalCheck {
 	/**
      * 健康診断年度
      */
-    private int checkYear;
+    private int year;
     
 	/**
      * File本体
@@ -29,6 +29,11 @@ public class MedicalCheck {
     private MultipartFile mFile_pdf;
     
     private MultipartFile mFile_picture;
+    
+	/**
+     * 表示の有無
+     */
+    private boolean display;
     
 	/**
      * PDFの場所

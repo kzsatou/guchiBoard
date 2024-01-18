@@ -26,10 +26,21 @@
 		UPDATE medical_check SET display = 'TRUE'
 		where user_id=#{param1} AND year=#{param2}
 	</insert>
+	<insert id="hideMedical" 
+		parameterType="com.example.guchiBoard.dto.MedicalCheckForm">  
+		UPDATE medical_check SET display = 'FALSE'
+		where user_id=#{param1} AND year=#{param2}
+	</insert>
 <!-- 新規健康診断結果表示 -->	
 	<select id="searchImage" 
 		resultType="String">  
 		<!-- SELECT picture_path from medical_check where user_id=#{param1} AND year=#{param2} -->
 		SELECT picture_path from medical_check where user_id=#{param1} AND display=TRUE
+	</select>
+<!-- 新規健康診断結果ダウンローダー表示 -->	
+	<select id="downloaderMedical" 
+		parameterType="com.example.guchiBoard.dto.MedicalCheckForm">  
+		<!-- SELECT picture_path from medical_check where user_id=#{param1} AND year=#{param2} -->
+		SELECT * from medical_check where user_id=#{param1} AND display=TRUE
 	</select>
 </mapper>

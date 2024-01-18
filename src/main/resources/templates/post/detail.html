@@ -43,8 +43,7 @@
 	<br />
 
 	<!-- テスト用コード -->
-	<form th:action="@{/post/display}" th:object="${medicalForm}"
-		th:method="post">
+	<form th:action ="@{/post/display}" th:object="${medicalForm}" th:method="post">
 
 		<div class="form-group">
 			<label>Id：</label> <input type="text" th:field="*{userId}"
@@ -55,11 +54,22 @@
 				class="form-control">
 		</div>
 
-		<br /> <input type="submit" value="健康診断結果を回答" class="btn btn-primary">
+		<br /> 
+		<input type="submit" name="display" value="健康診断結果を表示" class="btn btn-primary">
+		<input type="submit" name="hide" value="健康診断結果を非表示" class="btn btn-primary">
 	</form>
 	<br />
+	
+	<!-- 表示有効時のみ表示 -->   
 	<!-- ダウンロードテスト用コード -->
-	<button type="button" id="btn">ダウンロード</button>
+	<div class="card" th:each="download : ${downloader}" th:object="${download}">
+	<!-- <span th:if="*{display == true}">   --> 
+	<div class="card-body">
+			<td th:text="*{year}">:</td>
+			<button type="button" id="btn">ダウンロード</button>
+	<!-- </span> -->
+	</div>
+	</div>
 
 	<dialog>
 	<p>ダウンロードしますか？</p>
