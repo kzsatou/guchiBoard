@@ -33,6 +33,7 @@ import com.example.guchiBoard.entity.Tags;
 import com.example.guchiBoard.service.DownloadService;
 import com.example.guchiBoard.service.MedicalCheckService;
 import com.example.guchiBoard.service.PostService;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -170,7 +171,7 @@ public class PostController {
 	 * @param userID,year
 	 */
 	@RequestMapping(value = "/post/display", method = RequestMethod.POST)
-	public String displayCheck(@ModelAttribute MedicalCheckForm medicalForm, @RequestParam String display, int userId, int checkYear, Model model)
+	public String displayCheck(@ModelAttribute MedicalCheckForm medicalForm, int userId, int checkYear, Model model)
 			throws IOException {
 		System.out.println("/post/displayの確認");
 		medicalcheckService.displayMedical(userId, checkYear);
@@ -179,14 +180,17 @@ public class PostController {
 	
 	/**
 	 * 非公開設定
-	 * 非公開に設定した健康診断結果を表示
+	 * 非公開に設定した健康診断結果を削除
 	 * @param userID,year
 	 */
-	@RequestMapping(value = "/post/display", method = RequestMethod.POST)
-	public String hideCheck(@ModelAttribute MedicalCheckForm medicalForm, @RequestParam String hide, int userId, int checkYear, Model model)
+	@RequestMapping(value = "/post/hide", method = RequestMethod.POST)
+	public String hideCheck(@ModelAttribute MedicalCheck downloader, @AuthenticationPrincipal LoginUserDetails user,/* @RequestParam int year,*/ Model model)
 			throws IOException {
 		System.out.println("/post/hideの確認");
-		medicalcheckService.hideMedical(userId, checkYear);
+		System.out.println("--- downloader ---" + downloader);
+		System.out.println("--- year --- " + downloader.getYear());
+		int userId = 2; //テスト用
+		medicalcheckService.hideMedical(userId, downloader.getYear());
 		return "/main";
 	}
 
@@ -196,14 +200,16 @@ public class PostController {
 	 * @param file アップロードしたファイル
 	 */
 	@PostMapping(value = "/downloadFile")
-	public void downloadFile(@AuthenticationPrincipal LoginUserDetails user, HttpServletResponse response) {
+	public void downloadFile(@AuthenticationPrincipal LoginUserDetails user, int year, HttpServletResponse response) {
 		// ※userIDを取得する(認証機能実装後に正式な処理を実装,postIDからユーザーIDを特定する?)
 		// 処理方法については考える
 		System.out.println("downloadFile");
 		System.out.println(user.getId());
+		//System.out.println(year);
 		int userId = 2;
+		//int year = 2023;
 		String imgFilePath;
-		imgFilePath = medicalcheckService.searchImage(userId);
+		imgFilePath = medicalcheckService.searchImage(userId, year);
 		//imgFilePath = "./src/main/webapp/uploads/sample_.pdf";
 		downloadService.fileDownload(response, imgFilePath);
 	}

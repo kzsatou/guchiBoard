@@ -35,7 +35,7 @@
 	<select id="searchImage" 
 		resultType="String">  
 		<!-- SELECT picture_path from medical_check where user_id=#{param1} AND year=#{param2} -->
-		SELECT picture_path from medical_check where user_id=#{param1} AND display=TRUE
+		SELECT picture_path from medical_check where user_id=#{param1} AND year=#{param2}
 	</select>
 <!-- 新規健康診断結果ダウンローダー表示 -->	
 	<select id="downloaderMedical" 

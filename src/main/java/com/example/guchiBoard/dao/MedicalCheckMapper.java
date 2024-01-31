@@ -42,5 +42,5 @@ public interface MedicalCheckMapper {
 	 * @param postForm 登録用リクエストデータ
 	 */
 	//String searchImage(int userId, int checkYear);
-	String searchImage(int userId);
+	String searchImage(int userId, int year);
 }

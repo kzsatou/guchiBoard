@@ -68,8 +68,8 @@ public class MedicalCheckService {
 	 * public String searchImage(int userId, int checkYear) { return
 	 * medicalMapper.searchImage(userId, checkYear); }
 	 */
-    public String searchImage(int userId) {	
-    	return medicalMapper.searchImage(userId);
+    public String searchImage(int userId, int year) {	
+    	return medicalMapper.searchImage(userId, year);
     }
     
     /**
@@ -92,9 +92,9 @@ public class MedicalCheckService {
      * ダウンローダー公開設定
      * @param year,userID
      */
-	  public List<MedicalCheck> downloaderMedical(int userId) { return
-	  medicalMapper.downloaderMedical(userId); }
-	 
+	  public List<MedicalCheck> downloaderMedical(int userId) {
+		  return medicalMapper.downloaderMedical(userId); 
+		  }
     
     /**
      * 健康診断の表示
@@ -103,8 +103,9 @@ public class MedicalCheckService {
 	public String outputImage(int userId) throws IOException {
 		System.out.println("methodの確認"); 
 		System.out.println(userId); 
+		int year = 2023;
 		
-		String imgFilePath = searchImage(userId);
+		String imgFilePath = searchImage(userId, year);
 		
 		String base64Data = "";
 		File fileImg = null;

@@ -56,20 +56,24 @@
 
 		<br /> 
 		<input type="submit" name="display" value="健康診断結果を表示" class="btn btn-primary">
-		<input type="submit" name="hide" value="健康診断結果を非表示" class="btn btn-primary">
 	</form>
 	<br />
 	
 	<!-- 表示有効時のみ表示 -->   
 	<!-- ダウンロードテスト用コード -->
-	<div class="card" th:each="download : ${downloader}" th:object="${download}">
+	<form class="card" th:action="@{/post/hide}" th:each="download : ${downloader}" th:object="${download}" th:method="post">
 	<!-- <span th:if="*{display == true}">   --> 
 	<div class="card-body">
-			<td th:text="*{year}">:</td>
-			<button type="button" id="btn">ダウンロード</button>
+			<td th:text="*{year}" id="year">:</td>
+			<!-- <span th:text="*{year}" id="year"></span> -->
+			<!-- <span id="year">2023</span> -->
+			<input type="hidden" th:value="*{year}" name="year"></input>
+			<button type="button" th:onClick="|getElement('__*{year}__')|" class="btn btn-info" id="btn">ダウンロード</button>
+				<input type="submit" th:field="${download}" class="btn btn-danger">
+<!-- 				<input type="submit" name="hide" th:field="*{year}" th:value="*{year}" value="${download}" class="btn btn-danger">  -->
 	<!-- </span> -->
 	</div>
-	</div>
+	</form>
 
 	<dialog>
 	<p>ダウンロードしますか？</p>
@@ -80,27 +84,58 @@
 <!-- js一旦ベタ打ち -->
 	<script>
 		let dialog = document.querySelector('dialog');
-		let btn = document.getElementById('btn');
+		let btn = document.getElementById('btn'); 
+		/* let btn = this.parentNode.classList.contains('file-list') ?
+		           this.parentNode.querySelector('btn').value :
+		               undefined; */
 		let yes = document.getElementById('yes');
 		let no = document.getElementById('no');
+		let test; 
+/* 		let year = document.getElementById('year');
+		console.log(year); */
+
+		function getElement(year){
+		    /* let element = document.getElementById('year'); */
+		    let element = year;
+		    test = year;
+		    console.log('年度: ' + element);
+		    console.log('年度: ' + test);
+		    dialog.showModal();
+		    /* console.log('年度: ' + test.textContent); */
+		}
 
 		btn.addEventListener('click', function() {
+			console.log(test);
 			// 開くボタンをクリックした場合の処理
 			dialog.showModal();
 		}, false);
 
-		yes.addEventListener('click', function() {
+/* 		yes.addEventListener('click', function(year) {
 			// はいボタンをクリックした場合の処理
 			// 通常のJavascriptで実装
-			getDataXMLHttpRequest();
+			getDataXMLHttpRequest(year);
 			// jQueryで実装
-			// getDatajQuery();
+			
 			dialog.close();
 
-		}, false);
+		}, false); */
+		
+		yes.addEventListener('click',  {
+			year: test,
+			handleEvent: getDataXMLHttpRequest
+			// はいボタンをクリックした場合の処理
 
-		no.addEventListener('click', function() {
-			// いいえボタンをクリックした場合の処理    
+		}, false);
+		
+		function closeDialog(){
+		    console.log(this.message)
+		    console.log(test);
+			// いいえボタンをクリックした場合の処理   
+			dialog.close();
+		}
+
+		no.addEventListener('click', function(){
+			// いいえボタンをクリックした場合の処理   
 			dialog.close();
 		}, false);
 
@@ -137,13 +172,24 @@
 				alert("失敗");
 			}
 
+			/* let year = 2023 */
 			/* xmlhttp.open("POST", "/downloadFile", true); */
 			/* csfr対策 */
 			xmlhttp.open('POST','/downloadFile');
+			//xmlhttp.setRequestHeader("Content-Type", "application/json");
 			xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-			xmlhttp.withCredentials = true;
-			xmlhttp.send('text=csrf%20test');
+			//xmlhttp.withCredentials = true;
+			/* xmlhttp.send(JSON.stringify({
+				text: 'csrf%20test',
+				userId: 2,
+				year: 2023,
+			 }));*/
+			console.log(this.year);
+			console.log(test);
+			let sYear = this.year;
+			xmlhttp.send(`year=${test}`);
 			/* xmlhttp.send(); */
+			dialog.close();
 		}
 	</script>
 
