@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.example.guchiBoard.dto.UserForm;
 import com.example.guchiBoard.entity.User;
 
 /**
@@ -13,4 +14,6 @@ import com.example.guchiBoard.entity.User;
 public interface UserMapper {
 
 	 Optional<User> findByEmail(String email);
+	 
+	 void addUser(UserForm userForm);
 }

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}">
+    <title>GuchiBoard</title>
+  </head>
+<!-- <body>
+<div class="signup-container">
+  <div class="container">
+    <div class="row p-form-top d-none d-lg-block d-xl-block d-xxl-block"></div>
+    <div class="row">
+      <main class="col-md-4 mx-auto">
+        <h1 class="text-center text-white">Sign in</h1>
+        <form method="post" th:action="@{/user}" th:object="${UserForm}">
+          <div class="mb-3">
+            <label class="form-label text-white" for="user_name">Name</label>
+            <input type="text" class="form-control" th:field="*{userName}" /><p th:if="${#fields.hasErrors('userName')}" class="error-message" th:errors="*{name}"></p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label text-white" for="user_email">Email</label>
+            <input type="text" class="form-control" th:field="*{eMail}" /><p th:if="${#fields.hasErrors('eMail')}" class="error-message" th:errors="*{email}"></p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label text-white" for="user_password">Password</label>
+            <input class="form-control" type="password" th:field="*{passWord}" /><p th:if="${#fields.hasErrors('passWord')}" class="error-message" th:errors="*{password}"></p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label text-white" for="user_password_confirmation">Password confirmation</label>
+            <input type="password" class="form-control" th:field="*{passwordConfirm}" /><p th:if="${#fields.hasErrors('passwordConfirm')}" class="error-message" th:errors="*{passwordConfirmation}"></p>
+          </div>
+          <input type="submit" value="登録" class="btn w-100 btn-outline-light" />
+        </form>
+      </main>
+    </div>
+  </div>
+</div> 
+  </body> -->
+  
+<body>
+<div class="signup-container">
+    <h2>User Signup</h2>
+    <form method="post" th:action="@{/user}" th:object="${UserForm}">
+        <label for="username">Username:</label>
+        <input type="text" class="form-control" th:field="*{userName}" /><p th:if="${#fields.hasErrors('userName')}" class="error-message" th:errors="*{name}"></p>   
+
+        <label for="email">Email:</label>
+        <input type="text" class="form-control" th:field="*{eMail}" /><p th:if="${#fields.hasErrors('eMail')}" class="error-message" th:errors="*{email}"></p>
+
+        <label for="password">Password:</label>
+        <input class="form-control" type="password" th:field="*{passWord}" /><p th:if="${#fields.hasErrors('passWord')}" class="error-message" th:errors="*{password}"></p>
+
+        <label for="password-confirm">Confirm Password:</label>
+        <input type="password" class="form-control" th:field="*{passwordConfirm}" /><p th:if="${#fields.hasErrors('passwordConfirm')}" class="error-message" th:errors="*{passwordConfirmation}"></p>
+
+        <button type="submit" class="signup-btn">Signup</button>
+    </form>
+    <!-- エラーメッセージを表示するための場所 -->
+    <div id="error-message" style="color: red;"></div>
+</div>
+</body>
+</html>

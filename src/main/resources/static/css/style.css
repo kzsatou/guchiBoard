@@ -64,6 +64,35 @@
     opacity: .85;
     background-color: transparent; }
 
+.signup-container {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 5px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  width: 300px; }
+
+.signup-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none; }
+
+.signup-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #3498db;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s; }
+
+.signup-btn:hover {
+  background-color: #2980b9; }
+
 input[type="date"] {
   padding: .5em 1em;
   border: 1px solid #ddd;

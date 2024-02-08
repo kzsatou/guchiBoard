@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <!-- layout:decorate="~{layouts/layout}" -->
 <head>
@@ -56,12 +56,15 @@ nav.navbar {
 				</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" th:href="@{/calendar/calendar}"縲�data-bs-toggle="tooltip" data-bs-placement="right" title="繧ｫ繝ｬ繝ｳ繝�繝ｼ逕ｻ髱｢縺ｫ驕ｷ遘ｻ縺励∪縺�">
+				<a class="nav-link" th:href="@{/calendar/calendar}"邵ｲ�ｿｽdata-bs-toggle="tooltip" data-bs-placement="right" title="郢ｧ�ｽｫ郢晢ｽｬ郢晢ｽｳ郢晢ｿｽ郢晢ｽｼ騾包ｽｻ鬮ｱ�ｽ｢邵ｺ�ｽｫ鬩包ｽｷ驕假ｽｻ邵ｺ蜉ｱ竏ｪ邵ｺ�ｿｽ">
 					<img id="img-calender" src="/images/icons/calendar.png" th:src="@{/images/icons/calendar.png}">
 				</a>
 			</li>
+			<!-- <li class="nav-item" th:href="@{/logout}"> -->
 			<li class="nav-item">
-				<img id="img-logout" src="/images/icons/logout.png" th:src="@{/images/icons/logout.png}">
+				<a class="nav-link" th:href="@{/logout}">
+					<img id="img-logout" src="/images/icons/logout.png" th:src="@{/images/icons/logout.png}">
+				</a>
 			</li>
 		</ul>
 	</nav>

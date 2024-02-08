@@ -205,6 +205,7 @@ public class PostController {
 		// 処理方法については考える
 		System.out.println("downloadFile");
 		System.out.println(user.getId());
+		System.out.println(year);
 		//System.out.println(year);
 		int userId = 2;
 		//int year = 2023;

@@ -59,10 +59,29 @@
 	</form>
 	<br />
 	
+	<!-- <p th:text="${#authentication.name}"></p> -->
+	<p th:text=${#authentication.principal.Id}></p>
+	<h>こんにちは、<span sec:authentication="principal.Id"></span>さん</h>
 	<!-- 表示有効時のみ表示 -->   
 	<!-- ダウンロードテスト用コード -->
-	<form class="card" th:action="@{/post/hide}" th:each="download : ${downloader}" th:object="${download}" th:method="post">
-	<!-- <span th:if="*{display == true}">   --> 
+	<!-- or ${loginId == detailId} -->
+	 <!-- or ${#authentication.name == 'student@example.com' -->
+	 <!-- adminユーザー用コード -->
+	<form class="card" sec:authorize="hasRole('ADMIN')" th:action="@{/post/hide}" th:each="download : ${downloader}" th:object="${download}" th:method="post">
+	<div class="card-body">
+			<td th:text="*{year}" id="year">:</td>
+			<!-- <span th:text="*{year}" id="year"></span> -->
+			<!-- <span id="year">2023</span> -->
+			<input type="hidden" th:value="*{year}" name="year"></input>
+			<button type="button" th:onClick="|getElement('__*{year}__')|" class="btn btn-info" id="btn">ダウンロード</button>
+				<input type="submit" th:field="${download}" class="btn btn-danger">
+
+	</div>
+	</form>
+	
+	 <!-- 一般ユーザー用コード -->
+	<form class="card" sec:authorize="hasRole('USER')" th:action="@{/post/hide}" th:each="download : ${downloader}" th:object="${download}" th:method="post">
+	<th:block th:if="${#authentication.principal.Id == download.userId}">
 	<div class="card-body">
 			<td th:text="*{year}" id="year">:</td>
 			<!-- <span th:text="*{year}" id="year"></span> -->
@@ -71,8 +90,8 @@
 			<button type="button" th:onClick="|getElement('__*{year}__')|" class="btn btn-info" id="btn">ダウンロード</button>
 				<input type="submit" th:field="${download}" class="btn btn-danger">
 <!-- 				<input type="submit" name="hide" th:field="*{year}" th:value="*{year}" value="${download}" class="btn btn-danger">  -->
-	<!-- </span> -->
 	</div>
+	</th:block>
 	</form>
 
 	<dialog>

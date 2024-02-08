@@ -24,6 +24,11 @@ public class UserForm implements Serializable {
 	private String passWord;
 	
 	/**
+	 * パスワード確認
+	 */
+	private String passwordConfirm;
+	
+	/**
 	 * ロール
 	 */
 	private String roles;
