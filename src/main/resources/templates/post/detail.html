@@ -24,6 +24,9 @@
 		<button type="button" class="btn btn-info" th:text="*{tag}" disabled></button>
 		<h5 class="card-title" th:text="*{title}"></h5>
 		<p class="card-text" th:text="*{post}"></p>
+		<!-- th:onClick="|voiceDataXMLHttpRequest('__*{post}__')|" -->
+		<button type="button" th:onClick="|getText('__*{post}__')|"  class="btn btn-info" id="polly">音声読み上げ</button>
+
 
 		<div class="card" th:each="reply, stat : ${post.replyList}"
 			th:object="${reply}">
@@ -109,6 +112,8 @@
 		               undefined; */
 		let yes = document.getElementById('yes');
 		let no = document.getElementById('no');
+		let polly = document.getElementById('polly');
+		let text;
 		let test; 
 /* 		let year = document.getElementById('year');
 		console.log(year); */
@@ -120,6 +125,13 @@
 		    console.log('年度: ' + element);
 		    console.log('年度: ' + test);
 		    dialog.showModal();
+		    /* console.log('年度: ' + test.textContent); */
+		}
+		
+		function getText(post){
+		    /* let element = document.getElementById('year'); */
+		    text = post;
+		    console.log(post);
 		    /* console.log('年度: ' + test.textContent); */
 		}
 
@@ -144,6 +156,11 @@
 			handleEvent: getDataXMLHttpRequest
 			// はいボタンをクリックした場合の処理
 
+		}, false);
+		
+		polly.addEventListener('click', function() {
+			console.log(text);
+			voiceDataXMLHttpRequest();
 		}, false);
 		
 		function closeDialog(){
@@ -210,6 +227,22 @@
 			/* xmlhttp.send(); */
 			dialog.close();
 		}
+		
+		/**
+		 * 音声読み上げ
+		 */
+		function voiceDataXMLHttpRequest() {
+
+			let xmlhttp = new XMLHttpRequest();
+
+
+			xmlhttp.open('POST','/polly');
+			//xmlhttp.setRequestHeader("Content-Type", "application/json");
+			xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			console.log(text);
+			xmlhttp.send(`text=${text}`);
+		}
+		
 	</script>
 
 	<br />

@@ -35,8 +35,17 @@ public class UserService {
 　　　	 * @param 
      * @return 正しいユーザーか
      */
-    public void addUser(UserForm userForm) {
-        userMapper.addUser(userForm);
+    public void addUser(User user) {
+        userMapper.addUser(user);
+    }
+    
+    /**
+     * ユーザー名検索
+　　　	 * @param 
+     * @return 正しいユーザーか
+     */
+    public User getUserByUsername(String userName) {
+        return userMapper.findByUsername(userName);
     }
     
 }

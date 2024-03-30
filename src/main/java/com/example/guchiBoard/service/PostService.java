@@ -19,6 +19,8 @@ public interface PostService{
 	public List<Post> findtagComment(long tagCode);
 	 
 	public void add(PostForm postForm);
+	
+	public void readText(String text);
 }
 
 

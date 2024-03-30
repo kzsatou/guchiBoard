@@ -31,6 +31,6 @@ public class User {
 	 /**
 	 * role
 	 */
-	 private String roles;
+	 private String roles = "ROLE_USER";
 	 
 }

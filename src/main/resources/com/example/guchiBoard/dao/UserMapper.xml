@@ -12,13 +12,18 @@
 		SELECT * from users where email=#{param1}
 	</select>
 	
+<!-- ユーザー名検索 -->	
+	<select id="findByUsername" resultType="com.example.guchiBoard.entity.User">
+        SELECT * FROM users WHERE name = #{userName}
+    </select>
+	
 <!-- ユーザー登録 -->	
 	<insert id="addUser" useGeneratedKeys="true" keyProperty="id"
-		parameterType="com.example.guchiBoard.dto.UserForm">  <!-- parameterType="Post" -->
-		INSERT INTO post_test
-		(name, email, password, roles, updated_date, created_date)
+		parameterType="com.example.guchiBoard.entity.User">  <!-- parameterType="Post" -->
+		INSERT INTO users
+		(email, password, name, roles, updated_date, created_date)
 		VALUES
-		(#{userName}, #{eMail}, #{passWord}, 'ROLE_USER',
+		(#{email}, #{password}, #{name}, #{roles},
 		CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 	</insert>
 </mapper>

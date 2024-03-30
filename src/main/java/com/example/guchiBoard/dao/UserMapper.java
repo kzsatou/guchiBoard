@@ -15,5 +15,7 @@ public interface UserMapper {
 
 	 Optional<User> findByEmail(String email);
 	 
-	 void addUser(UserForm userForm);
+	 User findByUsername(String userName);
+	 
+	 void addUser(User user);
 }

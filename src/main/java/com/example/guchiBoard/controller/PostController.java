@@ -32,25 +32,28 @@ import com.example.guchiBoard.entity.Reply;
 import com.example.guchiBoard.entity.Tags;
 import com.example.guchiBoard.service.DownloadService;
 import com.example.guchiBoard.service.MedicalCheckService;
+import com.example.guchiBoard.service.PollyService;
 import com.example.guchiBoard.service.PostService;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 
 import com.example.guchiBoard.config.AppConfig;
 import com.example.guchiBoard.config.LoginUserDetails;
+import com.example.guchiBoard.dao.PostMapper;
 
 /**
  * 投稿 Controller
  */
 @Controller
+@RequiredArgsConstructor
 public class PostController {
 
 	/**
 	 * 投稿 Service
 	 */
-	@Autowired
-	private PostService postService;
+	private final PostService postService;
 	@Autowired
 	private MedicalCheckService medicalcheckService;
 	@Autowired
@@ -118,6 +121,9 @@ public class PostController {
 		model.addAttribute("medicalForm", medicalForm);
 		List<Post> postOne = postService.findOne(postId);
 		/* ファイルを表示する処理(仮) */
+		/*テスト処理 音声読み上げ*/
+		//String text = "動作確認テストです。";
+		//postService.readText(text);
 		// ※userIDを取得する(未実装,postIDからユーザーIDを特定する?)
 		int userId = 2;
 		String base64Data = "";
@@ -213,5 +219,16 @@ public class PostController {
 		imgFilePath = medicalcheckService.searchImage(userId, year);
 		//imgFilePath = "./src/main/webapp/uploads/sample_.pdf";
 		downloadService.fileDownload(response, imgFilePath);
+	}
+	
+	/**
+	 * 音声読み上げAPI
+	 * @param file アップロードしたファイル
+	 */
+	@PostMapping(value = "/polly")
+	public void polly(String text) {
+		System.out.println(text);
+		/*テスト処理 音声読み上げ*/
+		postService.readText(text);
 	}
 }

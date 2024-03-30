@@ -34,11 +34,11 @@ public class SecurityConfig {
 
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.csrf((csrf) -> csrf.ignoringRequestMatchers("/downloadFile"))// ダウンロードは認証なし
+		http.csrf((csrf) -> csrf.ignoringRequestMatchers("/downloadFile", "/polly"))// ダウンロードは認証なし
 				// フォーム認証を使う
 				.formLogin(login -> login.permitAll()) // フォーム認証画面は認証不要
 				.authorizeHttpRequests(authz -> authz.requestMatchers("/css/**").permitAll() // CSSファイルは認証不要
-						.requestMatchers("/main").permitAll() // トップページは認証不要
+						.requestMatchers("/main", "/signup", "/user", "user/signup", "/user/signup", "signup").permitAll() // トップページ,サインアップは認証不要
 						.anyRequest().authenticated()// 他のURLはログイン後アクセス可能
 				);
 		/* ログアウト */
